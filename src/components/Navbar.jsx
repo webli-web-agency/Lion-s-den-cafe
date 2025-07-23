@@ -48,8 +48,8 @@ const Navbar = () => {
         
         {/* Left Links */}
         <ul className="flex gap-4 md:gap-[1.5vw] items-center text-sm md:text-[1.2vw]">
-          <li className="nav-link">Service</li>
-          <li className="nav-link">Gallery</li>
+          <li className="nav-link">Home</li>
+          <li className="nav-link">Services</li>
         </ul>
 
         {/* Logo */}
