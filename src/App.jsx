@@ -1,7 +1,6 @@
 import Home from './pages/Home'
 import About from './pages/About'
 import Contact from './pages/Contact'
-import Gallery from './pages/Gallery'
 import Service from './pages/Service'
 import Navbar from './components/Navbar'
 
@@ -13,7 +12,6 @@ function App() {
      <Navbar />
     <Home />
     <Service />
-    <Gallery />
     <About />
     <Contact />
    </main>

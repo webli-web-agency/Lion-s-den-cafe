@@ -105,7 +105,7 @@ const Service = () => {
   }, [])
 
   return (
-    <section className="w-full min-h-screen pt-10 px-[5vw] overflow-hidden">
+    <section className="relative w-full min-h-[80vh] md:min-h-screen pt-10 px-[5vw] overflow-hidden">
       <h1 className="text-center text-[8vw] md:text-[4vw] font-bold mb-10">Our Offerings</h1>
       <div ref={containerRef} className="relative w-full overflow-hidden cursor-grab">
         <div ref={sliderRef} className="flex gap-6">

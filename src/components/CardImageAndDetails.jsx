@@ -1,8 +1,6 @@
-import React from 'react'
-
 const CardImageAndDetails = ({ image, title, description }) => {
   return (
-    <div className="w-[250px] h-[60vh] lg:w-[250px] lg:h-[60vh] md:w-[200px] md:h-[50vh] w-[80vw] h-[45vh] bg-white rounded-xl shadow-md overflow-hidden flex flex-col hover:scale-[1.03] transition-transform duration-300">
+    <div className="w-[70vw] sm:w-[40vw] md:w-[280px] h-[50vh] sm:h-[50vh] md:h-[60vh] bg-white rounded-xl shadow-md overflow-hidden flex flex-col hover:scale-[1.03] transition-transform duration-300">
       <div className="h-[70%] w-full">
         <img
           src={image}
@@ -18,4 +16,4 @@ const CardImageAndDetails = ({ image, title, description }) => {
   )
 }
 
-export default CardImageAndDetails
+export default CardImageAndDetails;
