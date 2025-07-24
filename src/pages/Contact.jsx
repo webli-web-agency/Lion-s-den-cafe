@@ -5,7 +5,7 @@ import { useGSAP } from '@gsap/react';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const Contact = () => {
+const Contact = ({startAnimation}) => {
   const containerRef = useRef();
 
   useGSAP(() => {
@@ -22,27 +22,29 @@ const Contact = () => {
     });
 
     gsap.from('.contact-item', {
-      y: 40,
+      y: 10,
       opacity: 0,
-      duration: 0.8,
       stagger: 0.2,
       ease: 'power3.out',
       scrollTrigger: {
         trigger: '.contact-item',
-        start: 'top 95%', // Slightly adjusted for better triggering
+        start: 'top 75%',
+        end: 'bottom 40%',
+        toggleActions: 'play none none reverse', 
         scrub: true
       },
     });
-  }, { scope: containerRef });
+  }, [{ scope: containerRef }, startAnimation]);
 
   return (
     <section
+    id='Contact'
       ref={containerRef}
-      className="relative w-full min-h-screen px-[6vw] pt-[14vh] pb-[10vh] text-white flex flex-col justify-between"
+      className="relative w-full min-h-screen px-[6vw] pt-[14vh] pb-[5vh] text-white flex flex-col justify-between "
     >
       {/* Heading */}
       <div>
-        <h1 className="contact-heading text-[7.5vw] tracking-[0.3vw] font-bold mb-10">
+        <h1 className="contact-heading text-[7.5vw] md:text-[5.5vw] tracking-[0.3vw] font-bold mb-10">
           GET IN TOUCH
         </h1>
 
@@ -67,9 +69,9 @@ const Contact = () => {
               href="https://instagram.com/lions_den_cafe24"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm underline"
+              className="text-sm"
             >
-              @lionsdencafe
+              @lions_den_cafe24
             </a>
           </div>
 
@@ -80,15 +82,14 @@ const Contact = () => {
               href="https://www.google.com/maps?q=Lion's+Den+Cafe"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm underline"
+              className="text-sm"
             >
               Find us on Maps
             </a>
           </div>
         </div>
 
-        {/* Spacer to allow scroll for last item */}
-        <div className="h-[20vh]"></div>
+        
       </div>
 
       {/* Footer */}

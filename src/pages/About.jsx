@@ -5,7 +5,7 @@ import ScrollTrigger from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const About = () => {
+const About = ({startAnimation}) => {
   const sectionRef = useRef();
   const textRefs = useRef([]);
   const headingRef = useRef();
@@ -46,7 +46,7 @@ const About = () => {
         }
       );
     });
-  });
+  },[startAnimation]);
 
   const paragraph = `Welcome to Lion's Den Cafe 🦁, proudly founded by Aditya Sahu on September 24, 2024. We're more than just a cafe — we’re a bold blend of flavors and vibes that roar with personality. Every sip ☕, bite 🍝, and smile 😊 is a tribute to passion, creativity, and connection. Our journey began with a simple idea — to create a space where every visitor feels the warmth of a den and the thrill of something wild.
 From the moment you walk through our doors 🚪, you’re welcomed into a world of cozy lights, the aroma of freshly brewed coffee ☕, sizzling fast food 🍟, and a menu crafted to delight your senses. Whether you’re here to catch up with friends, dive into a good book 📖, or take a well-deserved break, Lion’s Den is your perfect retreat.
@@ -57,6 +57,7 @@ So take a seat 🪑, relax, and let your taste buds explore the wild side of fla
 
   return (
     <section
+      id="About"
       ref={sectionRef}
       className="w-full min-h-screen bg-black text-white px-[6vw] py-[8vh] flex flex-col justify-center"
     >

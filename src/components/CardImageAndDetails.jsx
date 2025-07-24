@@ -1,8 +1,12 @@
-const CardImageAndDetails = ({ image, title, description }) => {
+import React from 'react';
+
+
+const CardImageAndDetails = React.memo(({ image, title, description }) => {
   return (
     <div className="w-[70vw] sm:w-[40vw] md:w-[280px] h-[50vh] sm:h-[50vh] md:h-[60vh] bg-white rounded-xl shadow-md overflow-hidden flex flex-col hover:scale-[1.03] transition-transform duration-300">
       <div className="h-[70%] w-full">
         <img
+          loading="lazy"
           src={image}
           alt={title}
           className="w-full h-full object-cover"
@@ -14,6 +18,6 @@ const CardImageAndDetails = ({ image, title, description }) => {
       </div>
     </div>
   )
-}
+});
 
 export default CardImageAndDetails;

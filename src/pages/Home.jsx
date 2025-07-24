@@ -1,96 +1,91 @@
-import { useRef } from 'react'
-import { useGSAP } from "@gsap/react"
-import gsap from "gsap"
+import React, { useRef } from 'react';
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 
-const Home = () => {
-  const welcomeRef = useRef()
-  const titleRef = useRef()
-  const descRef = useRef()
-  const btnRef = useRef()
+const Home = ({ startAnimation }) => {
+  const welcomeRef = useRef();
+  const titleRef = useRef();
+  const descRef = useRef();
+  const btnRef = useRef();
 
- useGSAP(() => {
-  const ctx = gsap.context(() => {
-    // SET initial state
-    gsap.set(".float-emoji", { opacity: 0, y: 40 })
+  useGSAP(() => {
+    if (!startAnimation) return;
 
-    // ENTRANCE: show emojis once (fade + rise)
-    gsap.to(".float-emoji", {
-      opacity: 1,
-      y: 0,
-      duration: 0.6,
-      ease: "power2.out",
-      delay: 1,
-      stagger: 0.2,
-      onComplete: () => {
-        // LOOP FLOAT after entrance
-        gsap.to(".float-emoji", {
-          y: "-=10",
-          rotate: 10,
-          duration: 2,
-          repeat: -1,
-          yoyo: true,
-          ease: "power1.inOut",
-          stagger: 0.3,
-        })
-      }
-    })
+    const ctx = gsap.context(() => {
+      gsap.set(".float-emoji", { opacity: 0, y: 40 });
 
-    // Hero text animation
-    gsap.set([welcomeRef.current, titleRef.current, descRef.current, btnRef.current], {
-      opacity: 0,
-      y: 40,
-    })
+      gsap.to(".float-emoji", {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        ease: "power2.out",
+        delay: 0.5,
+        stagger: 0.2,
+        onComplete: () => {
+          gsap.to(".float-emoji", {
+            y: "-=10",
+            rotate: 10,
+            duration: 2,
+            repeat: -1,
+            yoyo: true,
+            ease: "power1.inOut",
+            stagger: 0.3,
+          });
+        }
+      });
 
-    gsap.to(welcomeRef.current, {
-      opacity: 1,
-      y: 0,
-      duration: 0.8,
-      ease: "power2.out",
-      delay: 1.3,
-    })
+      gsap.set([welcomeRef.current, titleRef.current, descRef.current, btnRef.current], {
+        opacity: 0,
+        y: 40,
+      });
 
-    gsap.to(titleRef.current, {
-      opacity: 1,
-      y: 0,
-      duration: 0.8,
-      delay: 1.6,
-      ease: "power2.out",
-    })
+      gsap.to(welcomeRef.current, {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: "power2.out",
+        delay: 0.8,
+      });
 
-    gsap.to(descRef.current, {
-      opacity: 1,
-      y: 0,
-      duration: 0.8,
-      delay: 1.9,
-      ease: "power2.out",
-    })
+      gsap.to(titleRef.current, {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        delay: 1.1,
+        ease: "power2.out",
+      });
 
-    gsap.to(btnRef.current, {
-      opacity: 1,
-      y: 0,
-      duration: 0.8,
-      delay: 2.2,
-      ease: "power2.out",
-    })
-  })
+      gsap.to(descRef.current, {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        delay: 1.4,
+        ease: "power2.out",
+      });
 
-  return () => ctx.revert()
-}, [])
+      gsap.to(btnRef.current, {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        delay: 1.7,
+        ease: "power2.out",
+      });
+    });
 
+    return () => ctx.revert();
+  }, [startAnimation]);
 
   return (
     <section
-      id="home"
+      id="Home"
       className="relative w-full h-[86vh] flex items-center justify-center text-white px-[4vw] overflow-hidden"
     >
-      {/* Floating Emojis including 🦁 */}
       <span className="float-emoji absolute top-[20%] left-[10%] text-[2rem]">☕</span>
       <span className="float-emoji absolute top-[30%] right-[15%] text-[2rem]">🍩</span>
       <span className="float-emoji absolute bottom-[20%] left-[20%] text-[2rem]">🥐</span>
       <span className="float-emoji absolute bottom-[15%] right-[25%] text-[2rem]">🍪</span>
       <span className="float-emoji absolute top-[10%] left-[45%] text-[2.2rem]">🦁</span>
 
-      {/* Hero Content */}
       <div className="text-center z-10">
         <h1
           ref={welcomeRef}
@@ -113,15 +108,17 @@ const Home = () => {
           A cozy escape where bold flavors meet a warm ambiance. Let your taste buds roar.
         </p>
 
-        <button
+        <a
+          download="lions-den-menu.pdf"
+          href="/assets/menu-pdf/Lion's Den Cafe_20250701_211425_0000.pdf"
           ref={btnRef}
-          className="mt-6 px-8 py-3 rounded-full border border-white text-white transition duration-300 hover:bg-white hover:text-black hover:shadow-lg opacity-0"
+          className="inline-block mt-6 px-8 py-3 cursor-pointer rounded-full border border-white text-white transition duration-300 hover:bg-white hover:text-black hover:shadow-lg opacity-0"
         >
           Download Menu
-        </button>
+        </a>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

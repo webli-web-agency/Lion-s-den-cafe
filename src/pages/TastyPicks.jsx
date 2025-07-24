@@ -4,12 +4,12 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 
 // images -->
-import WhiteSaucePasta from '../assets/images/white-sauce-pasta.jpg';
-import PaneerCheeseBurger from '../assets/images/paneer-cheese-burger.jpg';
-import PeriPeriFries from '../assets/images/peri-peri-fries.jpg';
-import TandooriPaneerSandwich from '../assets/images/tandoori-paneer-sandwich.jpg';
-import SchezwanFriedRice from '../assets/images/schezwan-rice.jpg';
-import ChilliPaneerDry from '../assets/images/chillie-paneer-dry.jpg';
+import WhiteSaucePasta from '../assets/images/white-sauce-pasta.webp';
+import PaneerCheeseBurger from '../assets/images/paneer-cheese-burger.webp';
+import PeriPeriFries from '../assets/images/peri-peri-fries.webp';
+import TandooriPaneerSandwich from '../assets/images/tandoori-paneer-sandwich.webp';
+import SchezwanFriedRice from '../assets/images/schezwan-rice.webp';
+import ChilliPaneerDry from '../assets/images/chillie-paneer-dry.webp';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -52,7 +52,7 @@ const items = [
   },
 ];
 
-const TastyPicks = () => {
+const TastyPicks = ({startAnimation}) => {
   const sectionRef = useRef(null);
 
  useGSAP(() => {
@@ -86,7 +86,7 @@ const TastyPicks = () => {
       },
     });
   });
-}, { scope: sectionRef });
+}, [{ scope: sectionRef }, startAnimation]);
 
 
 
@@ -106,6 +106,7 @@ const TastyPicks = () => {
             className="card bg-[#111111] rounded-xl overflow-hidden shadow-lg hover:scale-105 transition-transform duration-300 group"
           >
             <img
+            loading='lazy'
               src={image}
               alt={name}
               className="w-full h-48 object-cover group-hover:opacity-80"

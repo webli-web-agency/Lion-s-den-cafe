@@ -1,37 +1,41 @@
-// Preloader.jsx
 import React, { useEffect, useState } from 'react';
+import { gsap } from 'gsap';
 
-const Preloader = () => {
-  const [loaded, setLoaded] = useState(false);
+const Preloader = ({ onComplete }) => {
+  const [percent, setPercent] = useState(0);
+  const [exit, setExit] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoaded(true);
-    }, 3000); // Adjust time or use real loading condition
+    let interval;
 
-    return () => clearTimeout(timer);
-  }, []);
+    if (percent < 100) {
+      interval = setInterval(() => {
+        setPercent((prev) => Math.min(prev + 1, 100));
+      }, 25); // ~2.5 seconds to reach 100%
+    } else {
+      // Preloader exit animation
+      setTimeout(() => {
+        setExit(true);
+        gsap.to(".preloader", {
+          y: "-100%",
+          duration: 1,
+          ease: "power3.inOut",
+          onComplete: onComplete,
+        });
+      }, 300); // small pause before exit
+    }
+
+    return () => clearInterval(interval);
+  }, [percent, onComplete]);
 
   return (
-    <div
-      className={`fixed top-0 left-0 w-full h-full bg-[#111] text-white z-[9999] flex flex-col items-center justify-center transition-opacity duration-700 ${
-        loaded ? 'opacity-0 pointer-events-none' : 'opacity-100'
-      }`}
-    >
-      <h1 className="text-4xl md:text-6xl font-bold tracking-widest animate-pulse">
-        Lion’s Den Cafe 🦁
+    <div className="preloader fixed top-0 left-0 w-full h-full bg-white text-black z-[9999] flex flex-col items-center justify-center overflow-hidden">
+      <h1 className="md:text-4xl text-2xl md:text-6xl font-bold tracking-widest animate-pulse text-center whitespace-nowrap">
+        Are you hungry? 🍽️
       </h1>
-      <div className="mt-6 flex space-x-1 text-sm text-gray-400">
-        <span className="animate-bounce delay-0">L</span>
-        <span className="animate-bounce delay-100">o</span>
-        <span className="animate-bounce delay-200">a</span>
-        <span className="animate-bounce delay-300">d</span>
-        <span className="animate-bounce delay-400">i</span>
-        <span className="animate-bounce delay-500">n</span>
-        <span className="animate-bounce delay-600">g</span>
-        <span className="animate-bounce delay-700">.</span>
-        <span className="animate-bounce delay-800">.</span>
-        <span className="animate-bounce delay-900">.</span>
+
+      <div className="absolute bottom-6 right-8 text-[16px] md:text-lg font-mono text-gray-600">
+        {percent}%
       </div>
     </div>
   );

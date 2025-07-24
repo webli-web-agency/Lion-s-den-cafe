@@ -5,12 +5,12 @@ import { Draggable } from 'gsap/Draggable'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import CardImageAndDetails from '../components/CardImageAndDetails'
 
-import TraditionalMusic from "../assets/images/traditionalMusic.jpg"
-import SittingArrangement from "../assets/images/sittingTable.jpg"
-import BirthdayParty from "../assets/images/birthdayParty.jpg"
-import TeaCoffee from "../assets/images/tea&Coffee.jpg"
-import Television from "../assets/images/television.jpg"
-import SelfiePoint from "../assets/images/selfiePoint.jpg"
+import TraditionalMusic from "../assets/images/traditionalMusic.webp"
+import SittingArrangement from "../assets/images/sittingTable.webp"
+import BirthdayParty from "../assets/images/birthdayParty.webp"
+import TeaCoffee from "../assets/images/tea&Coffee.webp"
+import Television from "../assets/images/television.webp"
+import SelfiePoint from "../assets/images/selfiePoint.webp"
 
 gsap.registerPlugin( Draggable, ScrollTrigger)
 
@@ -47,7 +47,7 @@ const services = [
   },
 ]
 
-const Service = () => {
+const Service = ({startAnimation}) => {
   const sliderRef = useRef()
   const containerRef = useRef()
   const tweenRef = useRef()
@@ -102,10 +102,10 @@ const Service = () => {
         start: 'top 80%',
       },
     })
-  }, [])
+  }, [startAnimation])
 
   return (
-    <section className="relative w-full min-h-[80vh] md:min-h-screen pt-10 px-[5vw] overflow-hidden">
+    <section id="Services" className="relative w-full min-h-[80vh] md:min-h-screen pt-10 px-[5vw] overflow-hidden">
       <h1 className="text-center text-[8vw] md:text-[4vw] font-bold mb-10">Our Offerings</h1>
       <div ref={containerRef} className="relative w-full overflow-hidden cursor-grab">
         <div ref={sliderRef} className="flex gap-6">
