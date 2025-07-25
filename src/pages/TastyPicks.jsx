@@ -16,7 +16,7 @@ gsap.registerPlugin(ScrollTrigger);
 const items = [
   {
     name: "White Sauce Pasta",
-    price: '80-100',
+    price: '80-150',
     emoji: "🍝",
     image: WhiteSaucePasta,
     text: "Starting Price"
