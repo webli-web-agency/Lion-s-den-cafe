@@ -40,12 +40,12 @@ const Contact = ({startAnimation}) => {
     <section
     id='Contact'
       ref={containerRef}
-      className="relative w-full min-h-screen px-[6vw] pt-[14vh] pb-[5vh] text-white flex flex-col justify-between "
+      className="relative w-full min-h-[100vh] px-[6vw] pt-[14vh] pb-[5vh] text-white flex flex-col justify-between"
     >
       {/* Heading */}
       <div>
-        <h1 className="contact-heading text-[8vw] md:text-[5.5vw] tracking-[0.3vw] font-bold mb-10">
-          GET IN TOUCH
+        <h1 className="contact-heading text-[7vw] md:text-[5.5vw] tracking-[0.3vw] font-bold mb-10 md:text-left text-center">
+          SEE YOU AT THE CAFE
         </h1>
 
         {/* Contact Grid */}

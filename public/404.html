@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>404 - Lion's Den Cafe</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background-color: #fff8f0;
+        color: #4b2e2e;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        text-align: center;
+        padding: 20px;
+      }
+
+      h1 {
+        font-size: 7rem;
+        color: #d2691e;
+      }
+
+      p {
+        font-size: 1.4rem;
+        margin: 20px 0;
+        max-width: 500px;
+      }
+
+      a {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 12px 24px;
+        background-color: #6b4226;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 8px;
+        transition: background 0.3s ease;
+      }
+
+      a:hover {
+        background-color: #543219;
+      }
+
+      .logo {
+        width: 100px;
+        margin-bottom: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <img src="/logo192.png" alt="Lion's Den Cafe Logo" class="logo" />
+    <h1>404</h1>
+    <p>Looks like this page is off the menu! Let’s get you back to the cafe.</p>
+    <a href="/">Back to Home</a>
+
+    <script>
+      // Redirect all unknown routes to root for SPA fallback
+      sessionStorage.redirect = location.pathname;
+      location.replace("/");
+    </script>
+  </body>
+</html>

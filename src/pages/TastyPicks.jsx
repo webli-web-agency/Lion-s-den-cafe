@@ -19,36 +19,42 @@ const items = [
     price: '80-100',
     emoji: "🍝",
     image: WhiteSaucePasta,
+    text: "Starting Price"
   },
   {
     name: "Paneer Cheese Burger",
     price: '80',
     emoji: "🍔",
     image: PaneerCheeseBurger,
+    text: "Price"
   },
   {
     name: "Hot Beverages",
     price:'10-40',
     emoji: "☕",
     image: Coffee,
+    text: "Starting Price"
   },
   {
     name: "Schezwan Noodles",
     price: '60-120',
     emoji: "🍜",
     image: SchezwanNoodles,
+    text: "Starting Price"
   },
   {
     name: "Chilli Paneer Dry",
     price: '80-160',
     emoji: "🌶️",
     image: ChilliPaneerDry,
+    text: "Starting Price"
   },
   {
     name: "Crispy Corn",
     price: '90-170',
     emoji: "🌽",
     image: CrispyCorn,
+    text: "Starting Price"
   },
 ];
 
@@ -100,7 +106,7 @@ const TastyPicks = ({startAnimation}) => {
       </h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-        {items.map(({ name, price, emoji, image }) => (
+        {items.map(({ name, price, emoji, image, text }) => (
           <div
             key={name}
             className="card bg-[#111111] rounded-xl overflow-hidden shadow-lg hover:scale-105 transition-transform duration-300 group"
@@ -115,7 +121,7 @@ const TastyPicks = ({startAnimation}) => {
               <h3 className="text-xl font-semibold flex justify-between items-center">
                 {name} <span className="text-2xl">{emoji}</span>
               </h3>
-              <p className="text-yellow-400 mt-2 font-medium"><span>Starting</span> ₹{price}</p>
+              <p className="text-yellow-400 mt-2 font-medium"><span>{text}</span> ₹{price}</p>
             </div>
           </div>
         ))}
