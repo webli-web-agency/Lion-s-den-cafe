@@ -44,7 +44,7 @@ const Contact = ({startAnimation}) => {
     >
       {/* Heading */}
       <div>
-        <h1 className="contact-heading text-[7.5vw] md:text-[5.5vw] tracking-[0.3vw] font-bold mb-10">
+        <h1 className="contact-heading text-[8vw] md:text-[5.5vw] tracking-[0.3vw] font-bold mb-10">
           GET IN TOUCH
         </h1>
 

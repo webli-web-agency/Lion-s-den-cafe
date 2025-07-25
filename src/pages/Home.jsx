@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import LionsDenPdf from "../assets/menu-pdf/lionsDenMenu.pdf"; 
 
 const Home = ({ startAnimation }) => {
   const welcomeRef = useRef();
@@ -67,8 +68,8 @@ const Home = ({ startAnimation }) => {
         opacity: 1,
         y: 0,
         duration: 0.8,
-        delay: 1.7,
-        ease: "power2.out",
+        delay: 1.5,
+        ease: "circ.out",
       });
     });
 
@@ -109,8 +110,8 @@ const Home = ({ startAnimation }) => {
         </p>
 
         <a
-          download="lions-den-menu.pdf"
-          href="/assets/menu-pdf/Lion's Den Cafe_20250701_211425_0000.pdf"
+          download="LionsDenMenu.pdf"
+          href={LionsDenPdf}
           ref={btnRef}
           className="inline-block mt-6 px-8 py-3 cursor-pointer rounded-full border border-white text-white transition duration-300 hover:bg-white hover:text-black hover:shadow-lg opacity-0"
         >

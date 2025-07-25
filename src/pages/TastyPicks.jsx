@@ -4,51 +4,51 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 
 // images -->
-import WhiteSaucePasta from '../assets/images/white-sauce-pasta.webp';
-import PaneerCheeseBurger from '../assets/images/paneer-cheese-burger.webp';
-import PeriPeriFries from '../assets/images/peri-peri-fries.webp';
-import TandooriPaneerSandwich from '../assets/images/tandoori-paneer-sandwich.webp';
-import SchezwanFriedRice from '../assets/images/schezwan-rice.webp';
-import ChilliPaneerDry from '../assets/images/chillie-paneer-dry.webp';
+import WhiteSaucePasta from '../assets/images/whiteSaucePasta.webp';
+import PaneerCheeseBurger from '../assets/images/cheeseSliceBurger.webp';
+import Coffee from '../assets/images/Coffee.webp';
+import SchezwanNoodles from '../assets/images/schezwanNoodle.webp';
+import ChilliPaneerDry from '../assets/images/chilliPaneerDry.webp';
+import CrispyCorn from '../assets/images/crispyCorn.webp';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const items = [
   {
     name: "White Sauce Pasta",
-    price: 150,
+    price: '80-100',
     emoji: "🍝",
     image: WhiteSaucePasta,
   },
   {
     name: "Paneer Cheese Burger",
-    price: 80,
+    price: '80',
     emoji: "🍔",
     image: PaneerCheeseBurger,
   },
   {
-    name: "Peri Peri Fries",
-    price: 60,
-    emoji: "🍟",
-    image: PeriPeriFries,
+    name: "Hot Beverages",
+    price:'10-40',
+    emoji: "☕",
+    image: Coffee,
   },
   {
-    name: "Tandoori Paneer Sandwich",
-    price: 80,
-    emoji: "🥪",
-    image: TandooriPaneerSandwich,
-  },
-  {
-    name: "Schezwan Fried Rice",
-    price: 140,
-    emoji: "🍛",
-    image: SchezwanFriedRice,
+    name: "Schezwan Noodles",
+    price: '60-120',
+    emoji: "🍜",
+    image: SchezwanNoodles,
   },
   {
     name: "Chilli Paneer Dry",
-    price: 160,
+    price: '80-160',
     emoji: "🌶️",
     image: ChilliPaneerDry,
+  },
+  {
+    name: "Crispy Corn",
+    price: '90-170',
+    emoji: "🌽",
+    image: CrispyCorn,
   },
 ];
 
@@ -73,14 +73,14 @@ const TastyPicks = ({startAnimation}) => {
 
   cards.forEach((card) => {
     gsap.from(card, {
-      y: 20,
+      y: 30,
       opacity: 0,
       duration: 1,
       ease: 'linear',
       scrollTrigger: {
         trigger: card,
         start: 'top 90%',
-        end: 'top 85%',
+        end: 'top 80%',
         toggleActions: 'play none none reverse',
         scrub: true
       },
@@ -115,7 +115,7 @@ const TastyPicks = ({startAnimation}) => {
               <h3 className="text-xl font-semibold flex justify-between items-center">
                 {name} <span className="text-2xl">{emoji}</span>
               </h3>
-              <p className="text-yellow-400 mt-2 font-medium">₹{price}</p>
+              <p className="text-yellow-400 mt-2 font-medium"><span>Starting</span> ₹{price}</p>
             </div>
           </div>
         ))}

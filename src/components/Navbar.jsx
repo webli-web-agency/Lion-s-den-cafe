@@ -93,7 +93,7 @@ const Navbar = () => {
   return (
     <nav
       ref={navRef}
-      className={`fixed w-full h-[12vh] top-0 left-0 px-4 z-50 transition-transform duration-500 ${
+      className={`fixed w-full h-[12vh] top-0 left-0 px-4 z-50 bg-black shadow-md transition-transform duration-500 ${
         showNav ? 'translate-y-0' : '-translate-y-full'
       }`}
     >

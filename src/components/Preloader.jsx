@@ -29,12 +29,12 @@ const Preloader = ({ onComplete }) => {
   }, [percent, onComplete]);
 
   return (
-    <div className="preloader fixed top-0 left-0 w-full h-full bg-white text-black z-[9999] flex flex-col items-center justify-center overflow-hidden">
+    <div className="preloader fixed top-0 left-0 w-full h-full bg-yellow-500 text-zinc-800 z-[9999] flex flex-col items-center justify-center overflow-hidden">
       <h1 className="md:text-4xl text-2xl md:text-6xl font-bold tracking-widest animate-pulse text-center whitespace-nowrap">
         Are you hungry? 🍽️
       </h1>
 
-      <div className="absolute bottom-6 right-8 text-[16px] md:text-lg font-mono text-gray-600">
+      <div className="absolute bottom-6 right-8 text-[8vw] md:text-lg font-mono text-gray-600">
         {percent}%
       </div>
     </div>
