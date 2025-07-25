@@ -18,7 +18,7 @@ const Preloader = ({ onComplete }) => {
         setExit(true);
         gsap.to(".preloader", {
           y: "-100%",
-          duration: 1,
+          duration: 0.2,
           ease: "power3.inOut",
           onComplete: onComplete,
         });

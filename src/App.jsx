@@ -13,7 +13,7 @@ function App() {
   const startAnimation = !isLoading;
 
   return (
-    <main className="relative w-screen overflow-x-hidden bg-black text-white pt-[12vh]">
+    <main className="relative w-screen overflow-x-hidden bg-black text-white ">
       {isLoading && (
         <Preloader onComplete={() => setIsLoading(false)} />
       )}

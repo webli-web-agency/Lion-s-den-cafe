@@ -93,7 +93,7 @@ const Navbar = () => {
   return (
     <nav
       ref={navRef}
-      className={`fixed w-full h-[12vh] top-0 left-0 px-4 z-50 bg-black shadow-md transition-transform duration-500 ${
+      className={`fixed w-full h-[12vh] md:h-[18vh] top-0 left-0 px-4 z-50 bg-black shadow-md transition-transform duration-500 opacity-[70%] ${
         showNav ? 'translate-y-0' : '-translate-y-full'
       }`}
     >
@@ -135,7 +135,7 @@ const Navbar = () => {
         </ul>
 
         {/* Logo */}
-        <div id="logo" className="w-[40px] h-[40px] md:w-[4vw] md:h-[4vw] rounded-full overflow-hidden">
+        <div id="logo" className="w-[50px] h-[50px] md:w-[6vw] md:h-[6vw] rounded-full overflow-hidden">
           <img className="w-full h-full object-cover" src={Logo} alt="Lion's Den Logo" />
         </div>
 

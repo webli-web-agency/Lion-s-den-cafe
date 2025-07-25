@@ -1,7 +1,8 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import LionsDenPdf from "../assets/menu-pdf/lionsDenMenu.pdf"; 
+import LionsDenPdf from "../assets/menu-pdf/lionsDenMenu.pdf";
+import heroImage from "../assets/images/heroImage.webp";
 
 const Home = ({ startAnimation }) => {
   const welcomeRef = useRef();
@@ -9,8 +10,19 @@ const Home = ({ startAnimation }) => {
   const descRef = useRef();
   const btnRef = useRef();
 
+  const [imageLoaded, setImageLoaded] = useState(false);
+
+  // ✅ Preload background image
+  useEffect(() => {
+    const img = new Image();
+    img.src = heroImage;
+    img.onload = () => {
+      setImageLoaded(true); // trigger animation after image loads
+    };
+  }, []);
+
   useGSAP(() => {
-    if (!startAnimation) return;
+    if (!startAnimation || !imageLoaded) return;
 
     const ctx = gsap.context(() => {
       gsap.set(".float-emoji", { opacity: 0, y: 40 });
@@ -74,19 +86,31 @@ const Home = ({ startAnimation }) => {
     });
 
     return () => ctx.revert();
-  }, [startAnimation]);
+  }, [startAnimation, imageLoaded]);
 
   return (
     <section
       id="Home"
-      className="relative w-full h-[86vh] flex items-center justify-center text-white px-[4vw] overflow-hidden"
+      className={`relative w-full h-screen flex items-center justify-center text-white px-[4vw] md:pt-[20vh] overflow-hidden ${!imageLoaded ? 'opacity-0' : 'opacity-100 transition-opacity duration-700'}`}
     >
-      <span className="float-emoji absolute top-[20%] left-[10%] text-[2rem]">☕</span>
-      <span className="float-emoji absolute top-[30%] right-[15%] text-[2rem]">🍩</span>
-      <span className="float-emoji absolute bottom-[20%] left-[20%] text-[2rem]">🥐</span>
-      <span className="float-emoji absolute bottom-[15%] right-[25%] text-[2rem]">🍪</span>
-      <span className="float-emoji absolute top-[10%] left-[45%] text-[2.2rem]">🦁</span>
+      {/* Background Image */}
+      <img
+        src={heroImage}
+        alt="Hero Background"
+        className="absolute inset-0 w-full h-full object-cover z-0"
+      />
 
+      {/* Dark Overlay */}
+      <div className="absolute inset-0 bg-black/60 z-0" />
+
+      {/* Floating Emojis */}
+      <span className="float-emoji absolute top-[30%] left-[13%] text-[2rem] z-10">☕</span>
+      <span className="float-emoji absolute top-[30%] right-[15%] text-[2rem] z-10">🍩</span>
+      <span className="float-emoji absolute bottom-[15%] left-[20%] text-[2rem] z-10">🥐</span>
+      <span className="float-emoji absolute bottom-[25%] right-[25%] text-[2rem] z-10">🍪</span>
+      <span className="float-emoji absolute top-[20%] left-[45%] text-[2.2rem] z-10">🦁</span>
+
+      {/* Content */}
       <div className="text-center z-10">
         <h1
           ref={welcomeRef}
