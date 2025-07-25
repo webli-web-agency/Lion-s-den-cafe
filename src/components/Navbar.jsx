@@ -93,84 +93,83 @@ const Navbar = () => {
   return (
     <nav
       ref={navRef}
-      className={`fixed w-full h-[12vh] md:h-[18vh] top-0 left-0 px-4 z-50 bg-black shadow-md transition-transform duration-500 opacity-[70%] ${
-        showNav ? 'translate-y-0' : '-translate-y-full'
-      }`}
+      className={`fixed w-full h-[14vh] md:h-[18vh] top-0 left-0 px-4 z-50 transition-transform duration-500 ${showNav ? 'translate-y-0' : '-translate-y-full'
+        }`}
     >
+      {/* Gradient background with opacity behind content */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/30 to-black/60 backdrop-blur-md z-[-1]" />
+
       <div className="max-w-[1280px] mx-auto w-full h-full flex justify-between items-center flex-wrap gap-4 md:gap-[3vw]">
-        
+
         {/* Left Links */}
         <ul className="flex gap-4 md:gap-[1.5vw] items-center text-sm md:text-[1.2vw]">
           <li
-            className={`nav-link relative cursor-pointer pb-1 ${
-              (hovered === "Home" || active === "Home") ? "text-white" : "text-gray-300"
-            }`}
+            className={`nav-link relative cursor-pointer pb-1 ${(hovered === "Home" || active === "Home") ? "text-white" : "text-gray-300"
+              }`}
             onMouseEnter={() => setHovered("Home")}
             onMouseLeave={() => setHovered(null)}
             onClick={() => handleClick("Home")}
           >
             Home
-            <span className={`absolute bottom-0 left-0 w-full transition-all duration-300 ${
-              hovered === "Home" || active === "Home"
+            <span className={`absolute bottom-0 left-0 w-full transition-all duration-300 ${hovered === "Home" || active === "Home"
                 ? "bg-white scale-x-100"
                 : "bg-transparent scale-x-0"
-            }`}></span>
+              }`}></span>
           </li>
 
           <li
-            className={`nav-link relative cursor-pointer pb-1 ${
-              (hovered === "Services" || active === "Services") ? "text-white" : "text-gray-300"
-            }`}
+            className={`nav-link relative cursor-pointer pb-1 ${(hovered === "Services" || active === "Services") ? "text-white" : "text-gray-300"
+              }`}
             onMouseEnter={() => setHovered("Services")}
             onMouseLeave={() => setHovered(null)}
             onClick={() => handleClick("Services")}
           >
             Services
-            <span className={`absolute bottom-0 left-0 w-full transition-all duration-300 ${
-              hovered === "Services" || active === "Services"
+            <span className={`absolute bottom-0 left-0 w-full transition-all duration-300 ${hovered === "Services" || active === "Services"
                 ? "bg-white scale-x-100"
                 : "bg-transparent scale-x-0"
-            }`}></span>
+              }`}></span>
           </li>
         </ul>
 
-        {/* Logo */}
-        <div id="logo" className="w-[50px] h-[50px] md:w-[6vw] md:h-[6vw] rounded-full overflow-hidden">
+        {/* Logo with glow */}
+        <div
+          onClick={() => handleClick("Home")}
+
+          id="logo"
+          className="w-[70px] h-[70px] md:w-[6vw] md:h-[6vw] rounded-full overflow-hidden glow-logo cursor-pointer opacity-full"
+        >
           <img className="w-full h-full object-cover" src={Logo} alt="Lion's Den Logo" />
         </div>
 
         {/* Right Links */}
         <ul className="flex gap-4 md:gap-[1.5vw] items-center text-sm md:text-[1.2vw]">
           <li
-            className={`nav-link relative cursor-pointer pb-1 ${
-              (hovered === "About" || active === "About") ? "text-white" : "text-gray-300"
-            }`}
+            className={`nav-link relative cursor-pointer pb-1 ${(hovered === "About" || active === "About") ? "text-white" : "text-gray-300"
+              }`}
             onMouseEnter={() => setHovered("About")}
             onMouseLeave={() => setHovered(null)}
             onClick={() => handleClick("About")}
           >
             About
-            <span className={`absolute bottom-0 left-0 w-full transition-all duration-300 ${
-              hovered === "About" || active === "About"
+            <span className={`absolute bottom-0 left-0 w-full transition-all duration-300 ${hovered === "About" || active === "About"
                 ? "bg-white scale-x-100"
                 : "bg-transparent scale-x-0"
-            }`}></span>
+              }`}></span>
           </li>
 
           <li
-            className={`nav-link relative cursor-pointer pb-1 ${
-              (hovered === "Contact" || active === "Contact") ? "text-white" : "text-gray-300"
-            }`}
+            className={`nav-link relative cursor-pointer pb-1 ${(hovered === "Contact" || active === "Contact") ? "text-white" : "text-gray-300"
+              }`}
             onMouseEnter={() => setHovered("Contact")}
             onMouseLeave={() => setHovered(null)}
             onClick={() => handleClick("Contact")}
           >
             Contact
-            <span className={`absolute bottom-0 left-0 w-full transition-all duration-300 ${
-              hovered === "Contact" || active === "Contact"
+            <span className={`absolute bottom-0 left-0 w-full transition-all duration-300 ${hovered === "Contact" || active === "Contact"
                 ? "bg-white scale-x-100"
                 : "bg-transparent scale-x-0"
-            }`}></span>
+              }`}></span>
           </li>
         </ul>
       </div>

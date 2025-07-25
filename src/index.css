@@ -30,3 +30,7 @@ h1, h2, h3 {
 .nav-link:hover::after {
   width: 100%;
 }
+
+.glow-logo{
+  filter: drop-shadow(0 0 6px #FFF);
+}
