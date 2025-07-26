@@ -7,6 +7,8 @@ import Navbar from './components/Navbar'
 import TastyPicks from './pages/TastyPicks'
 import Preloader from './components/Preloader'
 import Menu from './pages/Menu'
+import { Toaster } from 'react-hot-toast';
+
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -14,6 +16,16 @@ function App() {
 
   return (
     <main className="relative w-screen overflow-x-hidden bg-black text-white">
+      <Toaster
+  position="top-center"
+  toastOptions={{
+    style: {
+      background: '#facc15', // Tailwind yellow-500
+      color: '#000',
+    },
+  }}
+/>
+
       {/* Preloader shown while loading */}
       {isLoading && <Preloader onComplete={() => setIsLoading(false)} />}
 
