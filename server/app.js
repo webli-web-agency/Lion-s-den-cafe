@@ -1,4 +1,3 @@
-// app.js
 import express from "express";
 import cors from "cors";
 import nodemailer from "nodemailer";
@@ -6,10 +5,19 @@ import { configDotenv } from "dotenv";
 import multer from "multer";
 import path from "path";
 import fs from "fs";
+import mongoose from "mongoose";
+import Menu from "./models/menu.js";
 
 configDotenv();
 
 const app = express();
+
+// Connect to MongoDB
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => console.log("✅ MongoDB connected"))
+  .catch((err) => console.error("❌ MongoDB connection error:", err));
+
 
 // Middleware
 app.use(cors());
@@ -17,10 +25,10 @@ app.use(express.json({ limit: "16kb" }));
 app.use(express.urlencoded({ extended: true }));
 
 // Serve static files from public folder
-app.use("/public", express.static(path.join(process.cwd(), "public")));
+const publicPath = path.join(process.cwd(), "public");
+app.use("/public", express.static(publicPath));
 
 // Ensure public directory exists
-const publicPath = path.join(process.cwd(), "public");
 if (!fs.existsSync(publicPath)) {
   fs.mkdirSync(publicPath);
 }
@@ -46,28 +54,44 @@ const upload = multer({
   },
 });
 
-// 📤 Upload menu.json route
-app.post("/upload-menu", upload.single("menu"), (req, res) => {
-  res.json({ success: true, message: "Menu uploaded successfully" });
-});
-
-// 📥 Fetch menu.json route
-app.get("/get-menu", (req, res) => {
+// 📤 Upload menu.json route and store in MongoDB
+app.post("/upload-menu", upload.single("menu"), async (req, res) => {
   const filePath = path.join(publicPath, "menu.json");
-  fs.readFile(filePath, "utf-8", (err, data) => {
-    if (err) {
-      return res.status(404).json({ success: false, message: "Menu file not found" });
-    }
-    try {
-      const menu = JSON.parse(data);
-      res.json({ success: true, data: menu });
-    } catch (parseErr) {
-      res.status(500).json({ success: false, message: "Invalid JSON format" });
-    }
-  });
+
+  try {
+    const jsonData = JSON.parse(fs.readFileSync(filePath, "utf-8"));
+
+    // Optional: Clear previous menu
+    await Menu.deleteMany({});
+
+    // Save new menu
+    const newMenu = new Menu({ data: jsonData });
+    await newMenu.save();
+
+    res.json({ success: true, message: "Menu uploaded and stored in DB successfully" });
+  } catch (err) {
+    console.error("❌ Error uploading menu:", err);
+    res.status(500).json({ success: false, message: "Error uploading menu" });
+  }
 });
 
-// 📧 Email Route (UNCHANGED)
+// 📥 Get menu.json data from MongoDB
+app.get("/get-menu", async (req, res) => {
+  try {
+    const menu = await Menu.findOne().sort({ _id: -1 });
+
+    if (!menu) {
+      return res.status(404).json({ success: false, message: "Menu not found" });
+    }
+
+    res.json({ success: true, data: menu.data });
+  } catch (err) {
+    console.error("❌ Error fetching menu:", err);
+    res.status(500).json({ success: false, message: "Error fetching menu from DB" });
+  }
+});
+
+// 📧 Email Booking Route
 app.post("/send-email", async (req, res) => {
   const { name, email, phone, date, time, occasion, message } = req.body;
 
@@ -105,7 +129,7 @@ app.post("/send-email", async (req, res) => {
     await transporter.sendMail(mailOptions);
     res.status(200).json({ success: true, message: "Booking email sent successfully" });
   } catch (error) {
-    console.error("Email error:", error);
+    console.error("❌ Email error:", error);
     res.status(500).json({ success: false, message: "Something went wrong while sending email" });
   }
 });
