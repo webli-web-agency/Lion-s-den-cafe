@@ -6,6 +6,7 @@ import Service from './pages/Service'
 import Navbar from './components/Navbar'
 import TastyPicks from './pages/TastyPicks'
 import Preloader from './components/Preloader'
+import Menu from './pages/Menu'
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -22,6 +23,7 @@ function App() {
           <Navbar startAnimation={startAnimation} />
           <Home startAnimation={startAnimation} />
           <TastyPicks startAnimation={startAnimation} />
+          <Menu startAnimation={startAnimation} />
           <Service startAnimation={startAnimation} />
           <About startAnimation={startAnimation} />
           <Contact startAnimation={startAnimation} />
