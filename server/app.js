@@ -1,72 +1,71 @@
 import express from "express";
 import cors from "cors";
 import nodemailer from "nodemailer";
-import { configDotenv } from "dotenv";
 import multer from "multer";
 import path from "path";
 import fs from "fs";
 import mongoose from "mongoose";
-import Menu from "./models/menu.js";
+import { config as configDotenv } from "dotenv";
 
 configDotenv();
 
 const app = express();
 
-// Connect to MongoDB
+// MongoDB connection
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => console.log("✅ MongoDB connected"))
   .catch((err) => console.error("❌ MongoDB connection error:", err));
 
+// Define schema inline
+const productSchema = new mongoose.Schema({
+  name: String,
+  price: String,
+  image: String,
+  text: String,
+});
+
+const Product = mongoose.model("Product", productSchema);
 
 // Middleware
 app.use(cors());
 app.use(express.json({ limit: "16kb" }));
 app.use(express.urlencoded({ extended: true }));
 
-// Serve static files from public folder
+// Serve static files
 const publicPath = path.join(process.cwd(), "public");
-app.use("/public", express.static(publicPath));
-
-// Ensure public directory exists
 if (!fs.existsSync(publicPath)) {
   fs.mkdirSync(publicPath);
 }
+app.use("/public", express.static(publicPath));
 
-// Multer setup for JSON file upload
+// Multer setup
 const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, publicPath); // Save in /public
-  },
-  filename: function (req, file, cb) {
-    cb(null, "menu.json"); // Always save as menu.json
-  },
+  destination: (req, file, cb) => cb(null, publicPath),
+  filename: (req, file, cb) => cb(null, "menu.json"),
 });
 
 const upload = multer({
-  storage: storage,
-  fileFilter: function (req, file, cb) {
-    if (file.mimetype === "application/json") {
-      cb(null, true);
-    } else {
-      cb(new Error("Only JSON files are allowed!"));
-    }
+  storage,
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype === "application/json") cb(null, true);
+    else cb(new Error("Only JSON files are allowed!"));
   },
 });
 
-// 📤 Upload menu.json route and store in MongoDB
+// 📤 Upload menu.json and store in MongoDB
 app.post("/upload-menu", upload.single("menu"), async (req, res) => {
   const filePath = path.join(publicPath, "menu.json");
 
   try {
     const jsonData = JSON.parse(fs.readFileSync(filePath, "utf-8"));
 
-    // Optional: Clear previous menu
-    await Menu.deleteMany({});
+    if (!Array.isArray(jsonData)) {
+      return res.status(400).json({ success: false, message: "Invalid JSON format" });
+    }
 
-    // Save new menu
-    const newMenu = new Menu({ data: jsonData });
-    await newMenu.save();
+    await Product.deleteMany({});
+    await Product.insertMany(jsonData);
 
     res.json({ success: true, message: "Menu uploaded and stored in DB successfully" });
   } catch (err) {
@@ -75,16 +74,11 @@ app.post("/upload-menu", upload.single("menu"), async (req, res) => {
   }
 });
 
-// 📥 Get menu.json data from MongoDB
+// 📥 Get menu data from MongoDB
 app.get("/get-menu", async (req, res) => {
   try {
-    const menu = await Menu.findOne().sort({ _id: -1 });
-
-    if (!menu) {
-      return res.status(404).json({ success: false, message: "Menu not found" });
-    }
-
-    res.json({ success: true, data: menu.data });
+    const products = await Product.find({});
+    res.json({ success: true, data: products });
   } catch (err) {
     console.error("❌ Error fetching menu:", err);
     res.status(500).json({ success: false, message: "Error fetching menu from DB" });
@@ -134,4 +128,8 @@ app.post("/send-email", async (req, res) => {
   }
 });
 
-export default app;
+// Start the server
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on http://localhost:${PORT}`);
+});
