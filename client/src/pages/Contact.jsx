@@ -63,7 +63,7 @@ const Contact = ({ startAnimation }) => {
   };
 
   try {
-    const res = await fetch("https://glorious-palm-tree-5g9rr5qj695j2v7p5-5000.app.github.dev/send-email", {
+    const res = await fetch("https://lionsdencafe.onrender.com/send-email", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
