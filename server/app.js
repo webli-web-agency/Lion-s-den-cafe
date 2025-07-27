@@ -4,6 +4,7 @@ import nodemailer from "nodemailer";
 import multer from "multer";
 import path from "path";
 import fs from "fs/promises";
+import { existsSync } from "fs";
 import { config as configDotenv } from "dotenv";
 import { fileURLToPath } from "url";
 
@@ -14,10 +15,10 @@ configDotenv();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Create Express app
+// Express app
 const app = express();
 
-// CORS Configuration
+// CORS
 app.use(cors({
   origin: "*",
   methods: ["GET", "POST", "PUT", "DELETE"],
@@ -34,13 +35,13 @@ app.use(express.urlencoded({ extended: true }));
 const publicPath = path.join(__dirname, "public");
 const menuJsonPath = path.join(publicPath, "menu.json");
 
-// Ensure public directory exists
+// Ensure public folder exists
 await fs.mkdir(publicPath, { recursive: true });
 
-// Serve static files
+// Serve static
 app.use("/public", express.static(publicPath));
 
-// Multer setup for JSON menu upload
+// Multer config
 const upload = multer({
   storage: multer.diskStorage({
     destination: (_, __, cb) => cb(null, publicPath),
@@ -49,16 +50,21 @@ const upload = multer({
   fileFilter: (_, file, cb) => {
     file.mimetype === "application/json"
       ? cb(null, true)
-      : cb(new Error("Only JSON files are allowed"));
+      : cb(new Error("Only JSON files allowed"));
   },
 });
 
-// ✅ Route: Upload Menu
+// ✅ Upload Menu JSON
 app.post("/upload-menu", upload.single("menu"), async (req, res) => {
   try {
-    console.log("📥 Uploaded file:", req.file?.path);
+    if (!req.file) {
+      return res.status(400).json({ success: false, message: "No file uploaded" });
+    }
+
+    console.log("📥 Uploaded file:", req.file.path);
 
     const fileData = await fs.readFile(menuJsonPath, "utf-8");
+
     if (!fileData?.trim()) {
       return res.status(400).json({ success: false, message: "Uploaded file is empty." });
     }
@@ -66,7 +72,7 @@ app.post("/upload-menu", upload.single("menu"), async (req, res) => {
     const jsonData = JSON.parse(fileData);
 
     if (!Array.isArray(jsonData.menu)) {
-      return res.status(400).json({ success: false, message: "Invalid JSON: 'menu' array missing." });
+      return res.status(400).json({ success: false, message: "Invalid JSON structure: missing 'menu' array." });
     }
 
     console.log("✅ Menu uploaded and validated.");
@@ -74,23 +80,33 @@ app.post("/upload-menu", upload.single("menu"), async (req, res) => {
 
   } catch (error) {
     console.error("❌ Upload error:", error.message);
-    res.status(500).json({ success: false, message: "Server error during upload." });
+    res.status(500).json({ success: false, message: "Error uploading menu." });
   }
 });
 
-// ✅ Route: Get Menu
+// ✅ Get Menu
 app.get("/get-menu", async (_, res) => {
   try {
+    if (!existsSync(menuJsonPath)) {
+      return res.status(404).json({ success: false, message: "Menu file not found." });
+    }
+
     const fileData = await fs.readFile(menuJsonPath, "utf-8");
     const jsonData = JSON.parse(fileData);
+
+    if (!Array.isArray(jsonData.menu)) {
+      return res.status(500).json({ success: false, message: "Invalid menu format." });
+    }
+
     res.json({ success: true, data: jsonData.menu });
+
   } catch (error) {
     console.error("❌ Fetch menu error:", error.message);
     res.status(500).json({ success: false, message: "Failed to fetch menu." });
   }
 });
 
-// ✅ Route: Send Booking Email
+// ✅ Send Booking Email
 app.post("/send-email", async (req, res) => {
   const { name, email, phone, date, time, occasion, message } = req.body;
 
@@ -134,7 +150,7 @@ app.post("/send-email", async (req, res) => {
   }
 });
 
-// ✅ Start Server
+// ✅ Start server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`🚀 Lion's Den Café backend running at http://localhost:${PORT}`);
