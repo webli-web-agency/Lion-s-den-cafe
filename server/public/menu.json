@@ -1,0 +1,128 @@
+{
+  "menu": [
+    {
+      "category": "Chinese Dish",
+      "text": "Starting Price",
+      "image": "",
+      "items": [
+        {"name": "Manchurian Gravy", "half": 50, "full": 100},
+        {"name": "Veg Fried Rice", "half": 50, "full": 100},
+        {"name": "Manchurian Rice", "half": 60, "full": 120},
+        {"name": "Combination Rice", "half": 60, "full": 120},
+        {"name": "Schezwan Fried Rice", "half": 70, "full": 140},
+        {"name": "Paneer Fried Rice", "half": 70, "full": 140},
+        {"name": "Mushroom Fried Rice", "half": 80, "full": 150}
+      ]
+    },
+    {
+      "category": "Starters",
+      "text": "Starting Price",
+      "image": "",
+      "items": [
+        {"name": "Chilli Potato", "half": 70, "full": 140},
+        {"name": "Honey Chilli Potato", "half": 80, "full": 150},
+        {"name": "Chilli Paneer Dry", "half": 80, "full": 160},
+        {"name": "Crispy Corn", "half": 90, "full": 170}
+      ]
+    },
+    {
+      "category": "Maggi",
+      "text": "Starting Price",
+      "image": "",
+      "items": [
+        {"name": "Plain Maggi", "price": 40},
+        {"name": "Masala Maggi", "price": 50},
+        {"name": "Veg Maggi", "price": 60},
+        {"name": "Butter Maggi", "price": 70}
+      ]
+    },
+    {
+      "category": "Pasta",
+      "text": "Starting Price",
+      "image": "",
+      "items": [
+        {"name": "White Sauce Pasta", "half": 80, "full": 150}
+      ]
+    },
+    {
+      "category": "Burger",
+      "text": "Starting Price",
+      "image": "",
+      "items": [
+        {"name": "Veg Burger", "price": 50},
+        {"name": "Cheese Slice Burger", "price": 60},
+        {"name": "Paneer Burger", "price": 70},
+        {"name": "Paneer Cheese Burger", "price": 80},
+        {"name": "Pav Bhaji", "price": 50}
+      ]
+    },
+    {
+      "category": "Soup",
+      "text": "Starting Price",
+      "image": "",
+      "items": [
+        {"name": "Veg Soup", "price": 50},
+        {"name": "Veg Manchow Soup", "price": 60},
+        {"name": "Manchurian Soup", "price": 70}
+      ]
+    },
+    {
+      "category": "Sandwich",
+      "text": "Starting Price",
+      "image": "",
+      "items": [
+        {"name": "Veg Sandwich", "price": 40},
+        {"name": "Cheese Slice Sandwich", "price": 60},
+        {"name": "Tanduri Panner Sandwich", "price": 80}
+      ]
+    },
+    {
+      "category": "Noodles",
+      "text": "Starting Price",
+      "image": "",
+      "items": [
+        {"name": "Hakka Noodles", "half": 50, "full": 100},
+        {"name": "Veg Noodles", "half": 60, "full": 120},
+        {"name": "Schezwan Noodles", "half": 60, "full": 120},
+        {"name": "Manchurian Noodles", "half": 60, "full": 120},
+        {"name": "Paneer Noodles", "half": 70, "full": 140}
+      ]
+    },
+    {
+      "category": "Pizza",
+      "text": "Starting Price",
+      "image": "",
+      "items": [
+        {"name": "Onion Pizza", "price": 100},
+        {"name": "Tomato Pizza", "price": 100},
+        {"name": "Vegitable Pizza", "price": 120},
+        {"name": "Double Onion Pizza", "price": 150},
+        {"name": "Paneer Cheese Pizza", "price": 200},
+        {"name": "Paneer Tikka Pizza", "price": 250}
+      ]
+    },
+    {
+      "category": "Chai / Coffee",
+      "text": "Starting Price",
+      "image": "",
+      "items": [
+        {"name": "Regular Chai", "price": 10},
+        {"name": "Coffee", "price": 25},
+        {"name": "Strong Coffee", "price": 30},
+        {"name": "Kulhad Coffee", "price": 30},
+        {"name": "Bun Makkhan + Chai", "price": 40}
+      ]
+    },
+    {
+      "category": "French Fries",
+      "text": "Starting Price",
+      "image": "",
+      "items": [
+        {"name": "Chaat Masala Fries", "price": 50},
+        {"name": "Peri Peri Fries", "price": 60},
+        {"name": "Tandoori Fries", "price": 80}
+      ]
+    }
+  ]
+}
+
