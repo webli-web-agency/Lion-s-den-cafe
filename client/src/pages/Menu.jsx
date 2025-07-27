@@ -2,10 +2,10 @@ import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-gsap.registerPlugin(useGSAP);
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
-// Dummy emoji and image generator
 const getEmojiByCategory = (category) => {
   const map = {
     burger: "🍔",
@@ -16,21 +16,12 @@ const getEmojiByCategory = (category) => {
   return map[category.toLowerCase()] || map.default;
 };
 
-const getImageURL = (name) => `https://source.unsplash.com/400x300/?${name},food`;
+const getImageURL = (name) =>
+  `https://source.unsplash.com/400x300/?${encodeURIComponent(name)},food`;
 
 const Menu = () => {
   const [menuData, setMenuData] = useState([]);
   const menuRef = useRef();
-
-  useGSAP(() => {
-    gsap.from(menuRef.current, {
-      y: 100,
-      opacity: 0,
-      duration: 1,
-      ease: "power2.out",
-      stagger: 0.1,
-    });
-  }, [menuData]);
 
   useEffect(() => {
     const fetchMenu = async () => {
@@ -41,12 +32,12 @@ const Menu = () => {
 
         const parsed = categories.map((category) => ({
           heading: category.category,
-          text: category.text || "Price",
           items: (category.items || []).map((item) => ({
             name: item.name,
-            price: item.price !== undefined
-              ? item.price
-              : `₹${item.half || ""} (Half) / ₹${item.full || ""} (Full)`,
+            price:
+              item.price !== undefined
+                ? `₹${item.price}`
+                : `₹${item.half || "-"} (Half) / ₹${item.full || "-"} (Full)`,
             emoji: getEmojiByCategory(category.category),
             image: getImageURL(item.name),
           })),
@@ -61,38 +52,71 @@ const Menu = () => {
     fetchMenu();
   }, []);
 
+  useGSAP(() => {
+  // Kill previous triggers to avoid duplicate animations
+  ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+
+  const cards = gsap.utils.toArray(".menu-card");
+
+  cards.forEach((card) => {
+    gsap.from(card, {
+      y: 50,
+      opacity: 0,
+      duration: 0.6,
+      ease: "power2.out",
+      scrollTrigger: {
+        trigger: card,
+        start: "top 90%",
+        toggleActions: "play none none none", // <- No reverse or reset
+      },
+    });
+  });
+
+  // Refresh ScrollTrigger to fix layout issues
+  ScrollTrigger.refresh();
+}, [menuData]);
+
+
   return (
-    <div ref={menuRef} className="p-6 max-w-6xl mx-auto space-y-10">
+    <section
+      ref={menuRef}
+      className="max-w-6xl mx-auto px-4 py-16 text-white space-y-20"
+    >
       {menuData.map((section, i) => (
         <div key={i}>
-          <h2 className="text-3xl font-bold mb-4 capitalize border-b pb-1 border-gray-300">
+          {/* Category Heading */}
+          <h2 className="text-3xl font-bold mb-6 border-b border-gray-700 pb-2 flex items-center gap-2 capitalize">
+            <span>{getEmojiByCategory(section.heading)}</span>
             {section.heading}
           </h2>
-          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
+
+          {/* Grid of Items */}
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {section.items.map((item, j) => (
               <div
                 key={j}
-                className="bg-white shadow-xl rounded-xl overflow-hidden transition-transform hover:scale-105"
+                className="menu-card bg-gray-900 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-transform hover:-translate-y-1"
               >
                 <img
                   src={item.image}
                   alt={item.name}
                   className="w-full h-48 object-cover"
+                  onError={(e) => (e.target.src = "/fallback.jpg")}
                 />
-                <div className="p-4">
-                  <h3 className="text-xl font-semibold flex items-center justify-between">
-                    {item.name}
+                <div className="p-4 space-y-1">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-lg font-semibold text-white">{item.name}</h3>
                     <span>{item.emoji}</span>
-                  </h3>
-                  <p className="text-gray-600">{section.text}: {item.price}</p>
+                  </div>
+                  <p className="text-gray-400 text-sm">{item.price}</p>
                 </div>
               </div>
             ))}
           </div>
         </div>
       ))}
-    </div>
+    </section>
   );
 };
 
-export default Menu;
+export default Menu; 
