@@ -76,6 +76,7 @@ const TastyPicks = ({ startAnimation }) => {
       scrollTrigger: {
         trigger: section,
         start: 'top 90%',
+        end: 'top 80%'
       },
     });
 
