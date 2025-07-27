@@ -3,101 +3,95 @@ import axios from "axios";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 
+gsap.registerPlugin(useGSAP);
+
+// Dummy emoji and image generator
+const getEmojiByCategory = (category) => {
+  const map = {
+    burger: "🍔",
+    pizza: "🍕",
+    drinks: "🥤",
+    default: "🍽️",
+  };
+  return map[category.toLowerCase()] || map.default;
+};
+
+const getImageURL = (name) => `https://source.unsplash.com/400x300/?${name},food`;
+
 const Menu = () => {
-  const [menuItems, setMenuItems] = useState([]);
-  const cardsRef = useRef([]);
+  const [menuData, setMenuData] = useState([]);
+  const menuRef = useRef();
+
+  useGSAP(() => {
+    gsap.from(menuRef.current, {
+      y: 100,
+      opacity: 0,
+      duration: 1,
+      ease: "power2.out",
+      stagger: 0.1,
+    });
+  }, [menuData]);
 
   useEffect(() => {
     const fetchMenu = async () => {
       try {
         const res = await axios.get("https://lionsdencafe.onrender.com/get-menu");
-        const data = res.data.data;
+        const raw = res.data.data;
+        const categories = Array.isArray(raw) ? raw : [raw];
 
-        if (!Array.isArray(data)) throw new Error("Invalid menu structure");
+        const parsed = categories.map((category) => ({
+          heading: category.category,
+          text: category.text || "Price",
+          items: (category.items || []).map((item) => ({
+            name: item.name,
+            price: item.price !== undefined
+              ? item.price
+              : `₹${item.half || ""} (Half) / ₹${item.full || ""} (Full)`,
+            emoji: getEmojiByCategory(category.category),
+            image: getImageURL(item.name),
+          })),
+        }));
 
-        const flatItems = data.flatMap((category) =>
-          category.items
-            .filter((item) => item.isAvailable)
-            .map((item) => ({
-              name: item.name,
-              price: item.price !== undefined
-                ? item.price
-                : `₹${item.half} (Half) / ₹${item.full} (Full)`,
-              emoji: getEmojiByCategory(category.category),
-              image: getImageURL(item.name),
-              text: category.text || "Price",
-            }))
-        );
-
-        setMenuItems(flatItems);
-      } catch (err) {
-        console.error("Error fetching menu:", err);
+        setMenuData(parsed);
+      } catch (error) {
+        console.error("❌ Failed to fetch menu:", error);
       }
     };
 
     fetchMenu();
   }, []);
 
-  useGSAP(() => {
-    if (cardsRef.current.length) {
-      gsap.from(cardsRef.current, {
-        opacity: 0,
-        y: 50,
-        duration: 0.6,
-        stagger: 0.1,
-        ease: "power2.out",
-      });
-    }
-  }, [menuItems]);
-
-  const getEmojiByCategory = (category) => {
-    const lower = category.toLowerCase();
-    if (lower.includes("chinese")) return "🥡";
-    if (lower.includes("starter")) return "🍢";
-    if (lower.includes("maggi")) return "🍜";
-    if (lower.includes("pasta")) return "🍝";
-    if (lower.includes("burger")) return "🍔";
-    if (lower.includes("soup")) return "🥣";
-    if (lower.includes("sandwich")) return "🥪";
-    if (lower.includes("noodle")) return "🍜";
-    if (lower.includes("pizza")) return "🍕";
-    if (lower.includes("chai") || lower.includes("coffee")) return "☕";
-    if (lower.includes("fries")) return "🍟";
-    return "🍽️";
-  };
-
-  const getImageURL = (name) => {
-    const formatted = name.toLowerCase().replace(/\s+/g, "-");
-    return `https://your-cdn-or-image-host.com/images/${formatted}.jpg`;
-  };
-
   return (
-    <section className="px-4 py-10 md:px-20">
-      <h2 className="text-4xl font-bold text-center mb-10">Menu</h2>
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {menuItems.map((item, idx) => (
-          <div
-            key={idx}
-            ref={(el) => (cardsRef.current[idx] = el)}
-            className="bg-white p-5 rounded-2xl shadow-lg border hover:shadow-xl transition duration-300"
-          >
-            <img
-              src={item.image}
-              alt={item.name}
-              className="w-full h-40 object-cover rounded-xl mb-3"
-              loading="lazy"
-              onError={(e) => {
-                e.target.onerror = null;
-                e.target.src = `https://via.placeholder.com/300x200?text=${encodeURIComponent(item.name)}`;
-              }}
-            />
-            <div className="text-3xl mb-2">{item.emoji}</div>
-            <h3 className="text-xl font-semibold">{item.name}</h3>
-            <p className="text-gray-600">{item.text}: {item.price}</p>
+    <div ref={menuRef} className="p-6 max-w-6xl mx-auto space-y-10">
+      {menuData.map((section, i) => (
+        <div key={i}>
+          <h2 className="text-3xl font-bold mb-4 capitalize border-b pb-1 border-gray-300">
+            {section.heading}
+          </h2>
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
+            {section.items.map((item, j) => (
+              <div
+                key={j}
+                className="bg-white shadow-xl rounded-xl overflow-hidden transition-transform hover:scale-105"
+              >
+                <img
+                  src={item.image}
+                  alt={item.name}
+                  className="w-full h-48 object-cover"
+                />
+                <div className="p-4">
+                  <h3 className="text-xl font-semibold flex items-center justify-between">
+                    {item.name}
+                    <span>{item.emoji}</span>
+                  </h3>
+                  <p className="text-gray-600">{section.text}: {item.price}</p>
+                </div>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-    </section>
+        </div>
+      ))}
+    </div>
   );
 };
 
