@@ -1,133 +1,99 @@
-import React, { useRef, useEffect, useState } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useGSAP } from '@gsap/react';
+import React, { useEffect, useState, useRef } from "react";
+import axios from "axios";
+import { gsap } from "gsap";
+import { useGSAP } from "@gsap/react";
 
-// images -->
-import WhiteSaucePasta from '../assets/images/whiteSaucePasta.webp';
-import PaneerCheeseBurger from '../assets/images/cheeseSliceBurger.webp';
-import Coffee from '../assets/images/Coffee.webp';
-import SchezwanNoodles from '../assets/images/schezwanNoodle.webp';
-import ChilliPaneerDry from '../assets/images/chilliPaneerDry.webp';
-import CrispyCorn from '../assets/images/crispyCorn.webp';
+const Menu = () => {
+  const [menuItems, setMenuItems] = useState([]);
+  const cardsRef = useRef([]);
 
-gsap.registerPlugin(ScrollTrigger);
+  useEffect(() => {
+    const fetchMenu = async () => {
+      try {
+        const res = await axios.get("https://lionsdencafe.onrender.com/get-menu");
+        const data = res.data.data;
 
-const items = [
-  {
-    name: "White Sauce Pasta",
-    price: '80-150',
-    emoji: "🍝",
-    image: WhiteSaucePasta,
-    text: "Starting Price"
-  },
-  {
-    name: "Paneer Cheese Burger",
-    price: '80',
-    emoji: "🍔",
-    image: PaneerCheeseBurger,
-    text: "Price"
-  },
-  {
-    name: "Hot Beverages",
-    price: '10-40',
-    emoji: "☕",
-    image: Coffee,
-    text: "Starting Price"
-  },
-  {
-    name: "Schezwan Noodles",
-    price: '60-120',
-    emoji: "🍜",
-    image: SchezwanNoodles,
-    text: "Starting Price"
-  },
-  {
-    name: "Chilli Paneer Dry",
-    price: '80-160',
-    emoji: "🌶️",
-    image: ChilliPaneerDry,
-    text: "Starting Price"
-  },
-  {
-    name: "Crispy Corn",
-    price: '90-170',
-    emoji: "🌽",
-    image: CrispyCorn,
-    text: "Starting Price"
-  },
-];
+        if (!Array.isArray(data)) throw new Error("Invalid menu structure");
 
-const Menu = ({ startAnimation }) => {
-  const sectionRef = useRef(null);
- 
+        const flatItems = data.flatMap((category) =>
+          category.items
+            .filter((item) => item.isAvailable)
+            .map((item) => ({
+              name: item.name,
+              price: item.price !== undefined
+                ? item.price
+                : `₹${item.half} (Half) / ₹${item.full} (Full)`,
+              emoji: getEmojiByCategory(category.category),
+              image: getImageURL(item.name),
+              text: category.text || "Price",
+            }))
+        );
 
- 
+        setMenuItems(flatItems);
+      } catch (err) {
+        console.error("Error fetching menu:", err);
+      }
+    };
 
+    fetchMenu();
+  }, []);
 
   useGSAP(() => {
-    // Animate heading
-    gsap.from(sectionRef.current.querySelector('h2'), {
-      y: 50,
-      opacity: 0,
-      duration: 1,
-      ease: 'circ.out',
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: 'top 90%',
-      },
-    });
-
-    // Animate each card independently
-    const cards = gsap.utils.toArray('.menu-card');
-
-    cards.forEach((card) => {
-      gsap.from(card, {
-        y: 30,
+    if (cardsRef.current.length) {
+      gsap.from(cardsRef.current, {
         opacity: 0,
-        duration: 1,
-        ease: 'linear',
-        scrollTrigger: {
-          trigger: card,
-          start: 'top 90%',
-          end: 'top 80%',
-          toggleActions: 'play none none reverse',
-          scrub: true
-        },
+        y: 50,
+        duration: 0.6,
+        stagger: 0.1,
+        ease: "power2.out",
       });
-    });
-  }, [{ scope: sectionRef }, startAnimation]);
+    }
+  }, [menuItems]);
 
+  const getEmojiByCategory = (category) => {
+    const lower = category.toLowerCase();
+    if (lower.includes("chinese")) return "🥡";
+    if (lower.includes("starter")) return "🍢";
+    if (lower.includes("maggi")) return "🍜";
+    if (lower.includes("pasta")) return "🍝";
+    if (lower.includes("burger")) return "🍔";
+    if (lower.includes("soup")) return "🥣";
+    if (lower.includes("sandwich")) return "🥪";
+    if (lower.includes("noodle")) return "🍜";
+    if (lower.includes("pizza")) return "🍕";
+    if (lower.includes("chai") || lower.includes("coffee")) return "☕";
+    if (lower.includes("fries")) return "🍟";
+    return "🍽️";
+  };
 
+  const getImageURL = (name) => {
+    const formatted = name.toLowerCase().replace(/\s+/g, "-");
+    return `https://your-cdn-or-image-host.com/images/${formatted}.jpg`;
+  };
 
   return (
-    <section
-      ref={sectionRef}
-      id='Menu'
-      className="w-full min-h-screen bg-black text-white px-[4vw] py-16"
-    >
-      <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center">
-        Cafe Classics ☕
-      </h2>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-        {items.map(({ name, price, emoji, image, text }) => (
+    <section className="px-4 py-10 md:px-20">
+      <h2 className="text-4xl font-bold text-center mb-10">Menu</h2>
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {menuItems.map((item, idx) => (
           <div
-            key={name}
-            className="menu-card bg-[#111111] rounded-xl overflow-hidden shadow-lg hover:scale-105 transition-transform duration-300 group"
+            key={idx}
+            ref={(el) => (cardsRef.current[idx] = el)}
+            className="bg-white p-5 rounded-2xl shadow-lg border hover:shadow-xl transition duration-300"
           >
             <img
-              loading='lazy'
-              src={image}
-              alt={name}
-              className="w-full h-48 object-cover group-hover:opacity-80"
+              src={item.image}
+              alt={item.name}
+              className="w-full h-40 object-cover rounded-xl mb-3"
+              loading="lazy"
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = `https://via.placeholder.com/300x200?text=${encodeURIComponent(item.name)}`;
+              }}
             />
-            <div className="p-4">
-              <h3 className="text-xl font-semibold flex justify-between items-center">
-                {name} <span className="text-2xl">{emoji}</span>
-              </h3>
-              <p className="text-yellow-400 mt-2 font-medium"><span>{text}</span> ₹{price}</p>
-            </div>
+            <div className="text-3xl mb-2">{item.emoji}</div>
+            <h3 className="text-xl font-semibold">{item.name}</h3>
+            <p className="text-gray-600">{item.text}: {item.price}</p>
           </div>
         ))}
       </div>
