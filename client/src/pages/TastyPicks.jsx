@@ -3,7 +3,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 
-// images -->
+// Import images
 import WhiteSaucePasta from '../assets/images/whiteSaucePasta.webp';
 import PaneerCheeseBurger from '../assets/images/cheeseSliceBurger.webp';
 import Coffee from '../assets/images/Coffee.webp';
@@ -11,7 +11,7 @@ import SchezwanNoodles from '../assets/images/schezwanNoodle.webp';
 import ChilliPaneerDry from '../assets/images/chilliPaneerDry.webp';
 import CrispyCorn from '../assets/images/crispyCorn.webp';
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const items = [
   {
@@ -30,7 +30,7 @@ const items = [
   },
   {
     name: "Hot Beverages",
-    price:'10-40',
+    price: '10-40',
     emoji: "☕",
     image: Coffee,
     text: "Starting Price"
@@ -58,43 +58,44 @@ const items = [
   },
 ];
 
-const TastyPicks = ({startAnimation}) => {
+const TastyPicks = ({ startAnimation }) => {
   const sectionRef = useRef(null);
 
- useGSAP(() => {
-  // Animate heading
-  gsap.from(sectionRef.current.querySelector('h2'), {
-    y: 50,
-    opacity: 0,
-    duration: 1,
-    ease: 'circ.out',
-    scrollTrigger: {
-      trigger: sectionRef.current,
-      start: 'top 90%',
-    },
-  });
+  useGSAP(() => {
+    // Clean up previous scroll triggers
+    ScrollTrigger.getAll().forEach(trigger => trigger.kill());
 
-  // Animate each card independently
-  const cards = gsap.utils.toArray('.card');
+    const section = sectionRef.current;
 
-  cards.forEach((card) => {
-    gsap.from(card, {
-      y: 30,
+    // Animate heading
+    gsap.from(section.querySelector('h2'), {
+      y: 50,
       opacity: 0,
       duration: 1,
-      ease: 'linear',
+      ease: 'circ.out',
       scrollTrigger: {
-        trigger: card,
+        trigger: section,
         start: 'top 90%',
-        end: 'top 80%',
-        toggleActions: 'play none none reverse',
-        scrub: true
       },
     });
-  });
-}, [{ scope: sectionRef }, startAnimation]);
 
+    // Animate each card
+    gsap.utils.toArray('.card').forEach((card) => {
+      gsap.from(card, {
+        y: 30,
+        opacity: 0,
+        duration: 0.8,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: card,
+          start: 'top 90%',
+          toggleActions: 'play none none none',
+        },
+      });
+    });
 
+    ScrollTrigger.refresh();
+  }, { scope: sectionRef });
 
   return (
     <section
@@ -112,7 +113,7 @@ const TastyPicks = ({startAnimation}) => {
             className="card bg-[#111111] rounded-xl overflow-hidden shadow-lg hover:scale-105 transition-transform duration-300 group"
           >
             <img
-            loading='lazy'
+              loading="lazy"
               src={image}
               alt={name}
               className="w-full h-48 object-cover group-hover:opacity-80"
@@ -121,7 +122,9 @@ const TastyPicks = ({startAnimation}) => {
               <h3 className="text-xl font-semibold flex justify-between items-center">
                 {name} <span className="text-2xl">{emoji}</span>
               </h3>
-              <p className="text-yellow-400 mt-2 font-medium"><span>{text}</span> ₹{price}</p>
+              <p className="text-yellow-400 mt-2 font-medium">
+                <span>{text}</span> ₹{price}
+              </p>
             </div>
           </div>
         ))}
