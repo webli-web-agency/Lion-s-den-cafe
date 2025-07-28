@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import gsap from "gsap";
 import LionsDenPdf from "../assets/menu-pdf/lionsDenMenu.pdf";
 import heroImage from "../assets/images/heroImage.webp";
+import heroImageMobile from "../assets/images/heroImageMobile.jpg";
 
 const Home = ({ startAnimation }) => {
   const welcomeRef = useRef();
@@ -10,17 +11,29 @@ const Home = ({ startAnimation }) => {
   const btnRef = useRef();
 
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
-  // ✅ Preload background image
+  // ✅ Detect screen size (JS-based)
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768); // You can adjust this breakpoint
+    };
+
+    handleResize(); // Initial check
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // ✅ Preload selected image based on screen
   useEffect(() => {
     const img = new Image();
-    img.src = heroImage;
+    img.src = isMobile ? heroImageMobile : heroImage;
     img.onload = () => {
       setImageLoaded(true);
     };
-  }, []);
+  }, [isMobile]);
 
-  // ✅ Run GSAP animation only after both startAnimation & imageLoaded are true
+  // ✅ Run GSAP animation
   useEffect(() => {
     if (!startAnimation || !imageLoaded) return;
 
@@ -93,9 +106,9 @@ const Home = ({ startAnimation }) => {
       id="Home"
       className={`relative w-full h-screen flex items-center justify-center text-white px-[4vw] md:pt-[20vh] overflow-hidden ${!imageLoaded ? 'opacity-0' : 'opacity-100 transition-opacity duration-700'}`}
     >
-      {/* Background Image */}
+      {/* Background Image (JS-controlled) */}
       <img
-        src={heroImage}
+        src={isMobile ? heroImageMobile : heroImage}
         alt="Hero Background"
         className="absolute inset-0 w-full h-full object-cover z-0"
       />
