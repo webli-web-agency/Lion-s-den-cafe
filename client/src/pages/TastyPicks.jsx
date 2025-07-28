@@ -101,7 +101,7 @@ const TastyPicks = ({ startAnimation }) => {
   return (
     <section
       ref={sectionRef}
-      className="w-full min-h-screen bg-black text-white px-[4vw] py-16"
+      className="w-full relative min-h-screen bg-black text-white px-[4vw] py-16"
     >
       <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center">
         Tasty Picks 🍽️
