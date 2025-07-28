@@ -1,134 +1,111 @@
-import React, { useEffect, useState, useRef } from "react";
-import axios from "axios";
-import { gsap } from "gsap";
-import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import React, { useEffect, useRef, useMemo } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-gsap.registerPlugin(useGSAP, ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger);
 
-const getEmojiByCategory = (category) => {
-  const map = {
-    burger: "🍔",
-    pizza: "🍕",
-    drinks: "🥤",
-    snacks: "🍟",
-    tea: "🍵",
-    maggi: "🍜",
-    default: "🍽️",
-  };
-  return map[category?.toLowerCase()] || map.default;
-};
+const Menu = ({ menuData }) => {
+  const sectionRef = useRef(null);
 
-const fallbackImage = "/fallback.jpg";
-
-const Menu = () => {
-  const [menuData, setMenuData] = useState([]);
-  const menuRef = useRef();
+  const allItems = useMemo(() => {
+    return menuData.flatMap((category) =>
+      category.items.map((item) => ({
+        ...item,
+        category: category.category,
+        text: category.text,
+        image: item.image,
+      }))
+    );
+  }, [menuData]);
 
   useEffect(() => {
-    const fetchMenu = async () => {
-      try {
-        const res = await axios.get("https://lionsdencafe.onrender.com/get-menu");
-        const raw = res.data?.data || [];
+    if (allItems.length === 0) return;
 
-        const parsed = raw.map((section) => ({
-          heading: section.category,
-          items: section.items.map((item) => {
-            let priceDisplay;
+    const ctx = gsap.context(() => {
+      gsap.utils.toArray('.menu-item').forEach((card) => {
+        gsap.from(card, {
+          y: 30,
+          opacity: 0,
+          duration: 0.8,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: card,
+            start: 'top 90%',
+            toggleActions: 'play none none none',
+          },
+        });
+      });
 
-            if (item.price !== undefined) {
-              priceDisplay = `₹${item.price}`;
-            } else if (item.half || item.full) {
-              const half = item.half ? `₹${item.half} (Half)` : "";
-              const full = item.full ? `₹${item.full} (Full)` : "";
-              priceDisplay = [half, full].filter(Boolean).join(" / ");
-            } else {
-              priceDisplay = "Price not listed";
-            }
-
-            return {
-              name: item.name,
-              price: priceDisplay,
-              isAvailable: item.isAvailable !== false,
-              emoji: getEmojiByCategory(section.category),
-              image: item.image || `https://source.unsplash.com/400x300/?${encodeURIComponent(item.name)},food`,
-            };
-          }),
-        }));
-
-        setMenuData(parsed);
-      } catch (error) {
-        console.error("❌ Failed to fetch menu:", error);
-      }
-    };
-
-    fetchMenu();
-  }, []);
-
-  useGSAP(() => {
-    ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-
-    const cards = gsap.utils.toArray(".menu-card");
-
-    cards.forEach((card) => {
-      gsap.from(card, {
+      gsap.from(sectionRef.current.querySelector('h2'), {
         y: 50,
         opacity: 0,
-        duration: 0.6,
-        ease: "power2.out",
+        duration: 1,
+        ease: 'circ.out',
         scrollTrigger: {
-          trigger: card,
-          start: "top 90%",
-          toggleActions: "play none none none",
+          trigger: sectionRef.current,
+          start: 'top 90%',
+          end: 'top 80%',
+          scrub: 2,
         },
       });
-    });
 
-    ScrollTrigger.refresh();
-  }, [menuData]);
+      ScrollTrigger.refresh();
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, [allItems]);
 
   return (
     <section
-      ref={menuRef}
-      className="max-w-6xl mx-auto px-4 py-16 text-white space-y-20"
+      ref={sectionRef}
+      className="w-full relative min-h-screen bg-black text-white px-[4vw] py-16"
     >
-      {menuData.map((section, i) => (
-        <div key={i}>
-          <h2 className="text-3xl font-bold mb-6 border-b border-gray-700 pb-2 flex items-center gap-2 capitalize">
-            <span>{getEmojiByCategory(section.heading)}</span>
-            {section.heading}
-          </h2>
+      <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center text-yellow-400">
+        Our Menu 📋
+      </h2>
 
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {section.items.map((item, j) => (
-              <div
-                key={j}
-                className={`menu-card bg-gray-900 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-transform hover:-translate-y-1 ${!item.isAvailable ? "opacity-60" : ""
-                  }`}
-              >
+      {allItems.length === 0 ? (
+        <p className="text-center text-gray-400">No menu items available.</p>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+          {allItems.map((item, index) => (
+            <div
+              key={`${item.name}-${index}`}
+              className="menu-item bg-[#111111] rounded-xl overflow-hidden shadow-lg hover:scale-105 transition-transform duration-300 group"
+            >
+              {item.image && (
                 <img
                   src={item.image}
                   alt={item.name}
-                  className="w-full h-48 object-cover"
-                  onError={(e) => (e.target.src = fallbackImage)}
+                  loading="lazy"
+                  className="w-full h-48 object-cover group-hover:opacity-80"
                 />
-                <div className="p-4 space-y-1">
-                  <div className="flex items-center justify-between">
-                    <h3 className="text-lg font-semibold text-white">
-                      {item.name}
-                    </h3>
-                    <span>{item.emoji}</span>
-                  </div>
-                  <p className="text-gray-400 text-sm">{item.price}</p>
-                  {!item.isAvailable && (
-                    <p className="text-red-400 text-xs font-medium">Currently unavailable</p>
+              )}
+              <div className="p-4">
+                <h3 className="text-xl font-semibold flex justify-between items-center text-yellow-300">
+                  {item.name}
+                </h3>
+                <p className="text-sm text-gray-400 mt-1">{item.category}</p>
+
+                <div className="mt-2 text-sm text-white">
+                  {item.price !== undefined ? (
+                    <p>₹ {item.price}</p>
+                  ) : (
+                    <>
+                      <p>Half: ₹ {item.half}</p>
+                      <p>Full: ₹ {item.full}</p>
+                    </>
                   )}
                 </div>
+
+                {!item.isAvailable && (
+                  <p className="mt-2 text-red-500 font-semibold text-sm">Unavailable</p>
+                )}
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
-      ))}
+      )}
     </section>
   );
 };

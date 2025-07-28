@@ -2,125 +2,103 @@
   "menu": [
     {
       "category": "Chinese Dish",
-      "text": "Starting Price",
-      "image": "",
       "items": [
-        {"name": "Manchurian Gravy", "half": 50, "full": 100},
-        {"name": "Veg Fried Rice", "half": 50, "full": 100},
-        {"name": "Manchurian Rice", "half": 60, "full": 120},
-        {"name": "Combination Rice", "half": 60, "full": 120},
-        {"name": "Schezwan Fried Rice", "half": 70, "full": 140},
-        {"name": "Paneer Fried Rice", "half": 70, "full": 140},
-        {"name": "Mushroom Fried Rice", "half": 80, "full": 150}
+        { "name": "Manchurian Gravy", "half": 50, "full": 100, "isAvailable": true, "image": "https://res.cloudinary.com/dglphuocy/image/upload/v1753684116/pexels-photo-28643542_rhm10s.jpg" },
+        { "name": "Veg Fried Rice", "half": 50, "full": 100, "isAvailable": true, "image": "https://res.cloudinary.com/dglphuocy/image/upload/v1753683958/manchurianrice_j5iljc.avif" },
+        { "name": "Manchurian Rice", "half": 60, "full": 120, "isAvailable": true, "image": "https://res.cloudinary.com/dglphuocy/image/upload/v1753683961/pexels-photo-4910320_qcjmqt.jpg" },
+        { "name": "Combination Rice", "half": 60, "full": 120, "isAvailable": true, "image": "https://res.cloudinary.com/dglphuocy/image/upload/v1753683958/photo-1512058556646-c4da40fba323_q85se9.avif" },
+        { "name": "Schezwan Fried Rice", "half": 70, "full": 140, "isAvailable": true, "image": "https://res.cloudinary.com/dglphuocy/image/upload/v1753683958/photo-1603133872878-684f208fb84b_jf6ojk.avif" },
+        { "name": "Paneer Fried Rice", "half": 70, "full": 140, "isAvailable": true, "image": "https://res.cloudinary.com/dglphuocy/image/upload/v1753683959/photo-1751618646882-4221d5e3b1c2_o3ix2b.avif" },
+        { "name": "Mushroom Fried Rice", "half": 80, "full": 150, "isAvailable": true, "image": "https://res.cloudinary.com/dglphuocy/image/upload/v1753684116/pexels-photo-28643542_rhm10s.jpg" }
       ]
     },
     {
       "category": "Starters",
-      "text": "Starting Price",
-      "image": "",
       "items": [
-        {"name": "Chilli Potato", "half": 70, "full": 140},
-        {"name": "Honey Chilli Potato", "half": 80, "full": 150},
-        {"name": "Chilli Paneer Dry", "half": 80, "full": 160},
-        {"name": "Crispy Corn", "half": 90, "full": 170}
+        { "name": "Chilli Potato", "half": 70, "full": 140, "isAvailable": true, "image": "https://res.cloudinary.com/dglphuocy/image/upload/v1753683962/pexels-photo-1051399_s4p1qb.jpg" },
+        { "name": "Honey Chilli Potato", "half": 80, "full": 150, "isAvailable": true, "image": "https://res.cloudinary.com/dglphuocy/image/upload/v1753683962/pexels-photo-1051399_s4p1qb.jpg" },
+        { "name": "Chilli Paneer Dry", "half": 80, "full": 160, "isAvailable": true, "image": "https://res.cloudinary.com/dglphuocy/image/upload/v1753683964/pexels-photo-9609837_wl45ae.jpg" },
+        { "name": "Crispy Corn", "half": 90, "full": 170, "isAvailable": true, "image": "https://res.cloudinary.com/dglphuocy/image/upload/v1753683966/pexels-photo-2734288_h5jezm.jpg" }
       ]
     },
     {
       "category": "Maggi",
-      "text": "Starting Price",
-      "image": "",
       "items": [
-        {"name": "Plain Maggi", "price": 40},
-        {"name": "Masala Maggi", "price": 50},
-        {"name": "Veg Maggi", "price": 60},
-        {"name": "Butter Maggi", "price": 70}
+        { "name": "Plain Maggi", "price": 40, "isAvailable": true, "image": "https://res.cloudinary.com/dglphuocy/image/upload/v1753683963/pexels-photo-2347311_zesf8l.jpg" },
+        { "name": "Masala Maggi", "price": 50, "isAvailable": true, "image": "https://res.cloudinary.com/dglphuocy/image/upload/v1753683963/pexels-photo-2425705_dzeuod.jpg" },
+        { "name": "Veg Maggi", "price": 60, "isAvailable": true, "image": "https://res.cloudinary.com/dglphuocy/image/upload/v1753683964/pexels-photo-862949_txs8y0.jpg" },
+        { "name": "Butter Maggi", "price": 70, "isAvailable": true, "image": "https://res.cloudinary.com/dglphuocy/image/upload/v1753683963/pexels-photo-2425705_dzeuod.jpg" }
       ]
     },
     {
       "category": "Pasta",
-      "text": "Starting Price",
-      "image": "",
       "items": [
-        {"name": "White Sauce Pasta", "half": 80, "full": 150}
+        { "name": "White Sauce Pasta", "half": 80, "full": 150, "isAvailable": true, "image": "https://res.cloudinary.com/dglphuocy/image/upload/v1753683968/pexels-photo-1438672_qil2n4.jpg" }
       ]
     },
     {
       "category": "Burger",
-      "text": "Starting Price",
-      "image": "",
       "items": [
-        {"name": "Veg Burger", "price": 50},
-        {"name": "Cheese Slice Burger", "price": 60},
-        {"name": "Paneer Burger", "price": 70},
-        {"name": "Paneer Cheese Burger", "price": 80},
-        {"name": "Pav Bhaji", "price": 50}
+        { "name": "Veg Burger", "price": 50, "isAvailable": true, "image": "https://res.cloudinary.com/dglphuocy/image/upload/v1753683967/pexels-photo-1639557_lihvg0.jpg" },
+        { "name": "Cheese Slice Burger", "price": 60, "isAvailable": true, "image": "https://res.cloudinary.com/dglphuocy/image/upload/v1753684112/pexels-photo-3616956_g0goz0.jpg" },
+        { "name": "Paneer Burger", "price": 70, "isAvailable": true, "image": "https://res.cloudinary.com/dglphuocy/image/upload/v1753684114/pexels-photo-166653_dypep3.jpg" },
+        { "name": "Paneer Cheese Burger", "price": 80, "isAvailable": true, "image": "https://res.cloudinary.com/dglphuocy/image/upload/v1753684111/pexels-photo-1199960_c6hw6b.jpg" },
+        { "name": "Pav Bhaji", "price": 50, "isAvailable": true, "image": "https://res.cloudinary.com/dglphuocy/image/upload/v1753684114/pexels-photo-166653_dypep3.jpg" }
       ]
     },
     {
       "category": "Soup",
-      "text": "Starting Price",
-      "image": "",
       "items": [
-        {"name": "Veg Soup", "price": 50},
-        {"name": "Veg Manchow Soup", "price": 60},
-        {"name": "Manchurian Soup", "price": 70}
+        { "name": "Veg Soup", "price": 50, "isAvailable": true, "image": "https://res.cloudinary.com/dglphuocy/image/upload/v1753684113/pexels-photo-539451_xyrkh4.jpg" },
+        { "name": "Veg Manchow Soup", "price": 60, "isAvailable": true, "image": "https://res.cloudinary.com/dglphuocy/image/upload/v1753684113/pexels-photo-2664221_cexc8d.jpg" },
+        { "name": "Manchurian Soup", "price": 70, "isAvailable": true, "image": "https://res.cloudinary.com/dglphuocy/image/upload/v1753684116/pexels-photo-28643542_rhm10s.jpg" }
       ]
     },
     {
       "category": "Sandwich",
-      "text": "Starting Price",
-      "image": "",
       "items": [
-        {"name": "Veg Sandwich", "price": 40},
-        {"name": "Cheese Slice Sandwich", "price": 60},
-        {"name": "Tanduri Panner Sandwich", "price": 80}
+        { "name": "Veg Sandwich", "price": 40, "isAvailable": true, "image": "https://res.cloudinary.com/dglphuocy/image/upload/v1753684218/pexels-photo-1209029_mvjsnc.jpg" },
+        { "name": "Cheese Slice Sandwich", "price": 60, "isAvailable": true, "image": "https://res.cloudinary.com/dglphuocy/image/upload/v1753684217/pexels-photo-1647163_bjjt7z.jpg" },
+        { "name": "Tanduri Panner Sandwich", "price": 80, "isAvailable": true, "image": "https://res.cloudinary.com/dglphuocy/image/upload/v1753684220/pexels-photo-2161638_rbxeon.jpg" }
       ]
     },
     {
       "category": "Noodles",
-      "text": "Starting Price",
-      "image": "",
       "items": [
-        {"name": "Hakka Noodles", "half": 50, "full": 100},
-        {"name": "Veg Noodles", "half": 60, "full": 120},
-        {"name": "Schezwan Noodles", "half": 60, "full": 120},
-        {"name": "Manchurian Noodles", "half": 60, "full": 120},
-        {"name": "Paneer Noodles", "half": 70, "full": 140}
+        { "name": "Hakka Noodles", "half": 50, "full": 100, "isAvailable": true, "image": "https://res.cloudinary.com/dglphuocy/image/upload/v1753684217/pexels-photo-1395319_groug9.jpg" },
+        { "name": "Veg Noodles", "half": 60, "full": 120, "isAvailable": true, "image": "https://res.cloudinary.com/dglphuocy/image/upload/v1753684220/pexels-photo-1907228_hp0g69.jpg" },
+        { "name": "Schezwan Noodles", "half": 60, "full": 120, "isAvailable": true, "image": "https://res.cloudinary.com/dglphuocy/image/upload/v1753683963/pexels-photo-2347311_zesf8l.jpg" },
+        { "name": "Manchurian Noodles", "half": 60, "full": 120, "isAvailable": true, "image": "https://res.cloudinary.com/dglphuocy/image/upload/v1753684220/pexels-photo-3054690_mdsedh.jpg" },
+        { "name": "Paneer Noodles", "half": 70, "full": 140, "isAvailable": true, "image": "https://res.cloudinary.com/dglphuocy/image/upload/v1753684220/pexels-photo-1907228_hp0g69.jpg" }
       ]
     },
     {
       "category": "Pizza",
-      "text": "Starting Price",
-      "image": "",
       "items": [
-        {"name": "Onion Pizza", "price": 100},
-        {"name": "Tomato Pizza", "price": 100},
-        {"name": "Vegitable Pizza", "price": 120},
-        {"name": "Double Onion Pizza", "price": 150},
-        {"name": "Paneer Cheese Pizza", "price": 200},
-        {"name": "Paneer Tikka Pizza", "price": 250}
+        { "name": "Onion Pizza", "price": 100, "isAvailable": false, "image": "https://res.cloudinary.com/dglphuocy/image/upload/v1753684114/pexels-photo-905847_xheryh.webp" },
+        { "name": "Tomato Pizza", "price": 100, "isAvailable": false, "image": "https://res.cloudinary.com/dglphuocy/image/upload/v1753684117/pexels-photo-2619970_vhmkgp.jpg" },
+        { "name": "Vegitable Pizza", "price": 120, "isAvailable": false, "image": "https://res.cloudinary.com/dglphuocy/image/upload/v1753684116/pexels-photo-1049620_ft4of2.jpg" },
+        { "name": "Double Onion Pizza", "price": 150, "isAvailable": false, "image": "https://res.cloudinary.com/dglphuocy/image/upload/v1753684114/pexels-photo-905847_xheryh.webp" },
+        { "name": "Paneer Cheese Pizza", "price": 200, "isAvailable": false, "image": "https://res.cloudinary.com/dglphuocy/image/upload/v1753684333/pexels-photo-365459_ganwbh.jpg" },
+        { "name": "Paneer Tikka Pizza", "price": 250, "isAvailable": false, "image": "https://res.cloudinary.com/dglphuocy/image/upload/v1753684295/pexels-photo-1082343_abp1jq.jpg" }
       ]
     },
     {
       "category": "Chai / Coffee",
-      "text": "Starting Price",
-      "image": "",
       "items": [
-        {"name": "Regular Chai", "price": 10},
-        {"name": "Coffee", "price": 25},
-        {"name": "Strong Coffee", "price": 30},
-        {"name": "Kulhad Coffee", "price": 30},
-        {"name": "Bun Makkhan + Chai", "price": 40}
+        { "name": "Regular Chai", "price": 10, "isAvailable": true, "image": "https://res.cloudinary.com/dglphuocy/image/upload/v1753684385/photo-1683533698664-12ee473e8c9d_yfdnbe.avif" },
+        { "name": "Coffee", "price": 25, "isAvailable": true, "image": "https://res.cloudinary.com/dglphuocy/image/upload/v1753684385/photo-1538587888044-79f13ddd7e49_sf4hav.avif" },
+        { "name": "Strong Coffee", "price": 30, "isAvailable": true, "image": "https://res.cloudinary.com/dglphuocy/image/upload/v1753684385/photo-1621779474825-754202895b35_k15c0d.avif" },
+        { "name": "Kulhad Coffee", "price": 30, "isAvailable": true, "image": "https://res.cloudinary.com/dglphuocy/image/upload/v1753684386/photo-1625033405953-f20401c7d848_teviif.avif" },
+        { "name": "Bun Makkhan + Chai", "price": 40, "isAvailable": true, "image":"https://res.cloudinary.com/dglphuocy/image/upload/v1753684385/photo-1601303871810-5bcdaaaac632_f2iscd.avif" }
       ]
     },
     {
       "category": "French Fries",
-      "text": "Starting Price",
-      "image": "",
       "items": [
-        {"name": "Chaat Masala Fries", "price": 50},
-        {"name": "Peri Peri Fries", "price": 60},
-        {"name": "Tandoori Fries", "price": 80}
+        { "name": "Chaat Masala Fries", "price": 50, "isAvailable": true, "image": "https://res.cloudinary.com/dglphuocy/image/upload/v1753684385/premium_photo-1672774750509-bc9ff226f3e8_lbkpgr.avif" },
+        { "name": "Peri Peri Fries", "price": 60, "isAvailable": true, "image": "https://res.cloudinary.com/dglphuocy/image/upload/v1753684386/photo-1630384060421-cb20d0e0649d_rq1krb.avif" },
+        { "name": "Tandoori Fries", "price": 80, "isAvailable": true, "image": "https://res.cloudinary.com/dglphuocy/image/upload/v1753684384/photo-1598998834333-c0b91bc9b2a3_fb2732.avif" }
       ]
     }
   ]
