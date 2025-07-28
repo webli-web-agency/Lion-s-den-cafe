@@ -1,68 +1,54 @@
-import { useState } from 'react'
-import Home from './pages/Home'
-import About from './pages/About'
-import Contact from './pages/Contact'
-import Service from './pages/Service'
-import Navbar from './components/Navbar'
-import TastyPicks from './pages/TastyPicks'
-import Preloader from './components/Preloader'
-import Menu from './pages/Menu'
+import { useEffect, useState } from 'react';
+import Home from './pages/Home';
+import About from './pages/About';
+import Contact from './pages/Contact';
+import Service from './pages/Service';
+import TastyPicks from './pages/TastyPicks';
+import Menu from './pages/Menu';
+import Navbar from './components/Navbar';
+import Preloader from './components/Preloader';
 import { Toaster } from 'react-hot-toast';
-
+import axios from 'axios';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
-  const startAnimation = !isLoading;
+  const [menuData, setMenuData] = useState([]);
+
+  useEffect(() => {
+    const fetchMenu = async () => {
+      try {
+        const response = await axios.get('https://lionsdencafe.onrender.com/get-menu');
+        if (response.data.success) {
+          setMenuData(response.data?.data);
+        } else {
+          console.error('Failed to fetch menu data.');
+        }
+      } catch (error) {
+        console.error('Error fetching menu data:', error);
+      } finally {
+        setTimeout(() => {
+          setIsLoading(false); // delay ends, preloader gone
+        }, 1500); // ⏱️ adjust to match your preloader animation
+      }
+    };
+
+    fetchMenu();
+  }, []);
+
+  if (isLoading) return <Preloader />;
 
   return (
-    <main className="relative w-screen overflow-x-hidden bg-black text-white">
-      <Toaster
-  position="top-center"
-  toastOptions={{
-    style: {
-      background: '#facc15', // Tailwind yellow-500
-      color: '#000',
-    },
-  }}
-/>
-
-      {/* Preloader shown while loading */}
-      {isLoading && <Preloader onComplete={() => setIsLoading(false)} />}
-
-      {/* Main content after preloader */}
-      {!isLoading && (
-        <>
-          <Navbar startAnimation={startAnimation} />
-          <Home startAnimation={startAnimation} />
-          <TastyPicks startAnimation={startAnimation} />
-          <Menu startAnimation={startAnimation} />
-          <Service startAnimation={startAnimation} />
-          <About startAnimation={startAnimation} />
-          <Contact startAnimation={startAnimation} />
-
-          {/* WhatsApp Floating Button */}
-          <a
-            href="https://wa.me/919956845473"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="fixed right-4 bottom-[10%] w-12 h-12 bg-green-500 text-white text-3xl flex items-center justify-center rounded-full animate-pulse shadow-lg z-[1000] hover:scale-110 transition-transform duration-300"
-            aria-label="Chat on WhatsApp"
-          >
-            <i className="ri-whatsapp-fill"></i>
-          </a>
-
-          {/* Call Floating Button - Mobile Only */}
-          <a
-            href="tel:+919956845473"
-            className="fixed right-4 bottom-[20%] w-12 h-12 bg-blue-500 text-white text-2xl flex items-center justify-center rounded-full shadow-lg z-[1000] hover:scale-110 transition-transform duration-300 block md:hidden"
-            aria-label="Call Now"
-          >
-            <i className="ri-phone-fill"></i>
-          </a>
-        </>
-      )}
-    </main>
-  )
+    <>
+      <Toaster position="top-center" />
+      <Navbar />
+      <Home startAnimation={!isLoading} /> {/* ✅ Pass prop here */}
+      <TastyPicks />
+      <Menu menuData={menuData} />
+      <About />
+      <Service />
+      <Contact />
+    </>
+  );
 }
 
 export default App;

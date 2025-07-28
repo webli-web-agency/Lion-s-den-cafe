@@ -1,5 +1,4 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import LionsDenPdf from "../assets/menu-pdf/lionsDenMenu.pdf";
 import heroImage from "../assets/images/heroImage.webp";
@@ -17,11 +16,12 @@ const Home = ({ startAnimation }) => {
     const img = new Image();
     img.src = heroImage;
     img.onload = () => {
-      setImageLoaded(true); // trigger animation after image loads
+      setImageLoaded(true);
     };
   }, []);
 
-  useGSAP(() => {
+  // ✅ Run GSAP animation only after both startAnimation & imageLoaded are true
+  useEffect(() => {
     if (!startAnimation || !imageLoaded) return;
 
     const ctx = gsap.context(() => {
@@ -80,7 +80,7 @@ const Home = ({ startAnimation }) => {
         opacity: 1,
         y: 0,
         duration: 0.8,
-        delay: 1.5,
+        delay: 1.7,
         ease: "circ.out",
       });
     });

@@ -36,6 +36,16 @@ const Navbar = () => {
     );
 
     tl.from(
+        '#menuIcon',
+        {
+          opacity:0,
+          duration:1.2,
+          ease: 'back.out(1.7'
+        },
+        '-=0.6'
+      );
+
+    tl.from(
       '.nav-link',
       {
         opacity: 0,
@@ -46,6 +56,7 @@ const Navbar = () => {
       },
       '-=0.4'
     );
+
   }, []);
 
   // Hide/show on scroll
@@ -141,7 +152,7 @@ const Navbar = () => {
 
         {/* ✅ Mobile hamburger icon */}
         <div className="md:hidden text-3xl text-white ml-auto " onClick={() => setMobileOpen(!mobileOpen)}>
-          <i className={`ri-${mobileOpen ? 'close' : 'menu'}-line cursor-pointer`}></i>
+          <i id="menuIcon" className={`ri-${mobileOpen ? 'close' : 'menu'}-line cursor-pointer`}></i>
         </div>
       </div>
 

@@ -11,7 +11,7 @@ import SchezwanNoodles from '../assets/images/schezwanNoodle.webp';
 import ChilliPaneerDry from '../assets/images/chilliPaneerDry.webp';
 import CrispyCorn from '../assets/images/crispyCorn.webp';
 
-gsap.registerPlugin(ScrollTrigger, useGSAP);
+gsap.registerPlugin(ScrollTrigger);
 
 const items = [
   {
@@ -58,45 +58,45 @@ const items = [
   },
 ];
 
-const TastyPicks = ({ startAnimation }) => {
+const TastyPicks = () => {
   const sectionRef = useRef(null);
 
   useGSAP(() => {
-    // Clean up previous scroll triggers
-    ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-
-    const section = sectionRef.current;
-
-    // Animate heading
-    gsap.from(section.querySelector('h2'), {
-      y: 50,
-      opacity: 0,
-      duration: 1,
-      ease: 'circ.out',
-      scrollTrigger: {
-        trigger: section,
-        start: 'top 90%',
-        end: 'top 80%'
-      },
-    });
-
-    // Animate each card
-    gsap.utils.toArray('.card').forEach((card) => {
-      gsap.from(card, {
-        y: 30,
+    const ctx = gsap.context(() => {
+      // Animate heading
+      gsap.from(sectionRef.current.querySelector('h2'), {
+        y: 50,
         opacity: 0,
-        duration: 0.8,
-        ease: 'power2.out',
+        duration: 1,
+        ease: 'circ.out',
         scrollTrigger: {
-          trigger: card,
+          trigger: sectionRef.current,
           start: 'top 90%',
-          toggleActions: 'play none none none',
+          end: 'top 80%',
+          scrub: 2
         },
       });
-    });
 
-    ScrollTrigger.refresh();
-  }, { scope: sectionRef });
+      // Animate each card
+      gsap.utils.toArray('.card').forEach((card) => {
+        gsap.from(card, {
+          y: 30,
+          opacity: 0,
+          duration: 0.8,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: card,
+            start: 'top 90%',
+            toggleActions: 'play none none none',
+          },
+        });
+      });
+
+      ScrollTrigger.refresh();
+    }, sectionRef);
+
+    return () => ctx.revert(); // Clean up GSAP + ScrollTrigger safely
+  }, []);
 
   return (
     <section

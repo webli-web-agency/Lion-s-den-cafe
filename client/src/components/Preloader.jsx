@@ -11,7 +11,7 @@ const Preloader = ({ onComplete }) => {
     if (percent < 100) {
       interval = setInterval(() => {
         setPercent((prev) => Math.min(prev + 1, 100));
-      }, 25); // ~2.5 seconds to reach 100%
+      }, 55); // ~2.5 seconds to reach 100%
     } else {
       // Preloader exit animation
       setTimeout(() => {

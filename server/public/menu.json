@@ -9,7 +9,7 @@
         { "name": "Combination Rice", "half": 60, "full": 120, "isAvailable": true, "image": "https://res.cloudinary.com/dglphuocy/image/upload/v1753683958/photo-1512058556646-c4da40fba323_q85se9.avif" },
         { "name": "Schezwan Fried Rice", "half": 70, "full": 140, "isAvailable": true, "image": "https://res.cloudinary.com/dglphuocy/image/upload/v1753683958/photo-1603133872878-684f208fb84b_jf6ojk.avif" },
         { "name": "Paneer Fried Rice", "half": 70, "full": 140, "isAvailable": true, "image": "https://res.cloudinary.com/dglphuocy/image/upload/v1753683959/photo-1751618646882-4221d5e3b1c2_o3ix2b.avif" },
-        { "name": "Mushroom Fried Rice", "half": 80, "full": 150, "isAvailable": true, "image": "" }
+        { "name": "Mushroom Fried Rice", "half": 80, "full": 150, "isAvailable": true, "image": "https://res.cloudinary.com/dglphuocy/image/upload/v1753684116/pexels-photo-28643542_rhm10s.jpg" }
       ]
     },
     {
@@ -41,7 +41,7 @@
       "items": [
         { "name": "Veg Burger", "price": 50, "isAvailable": true, "image": "https://res.cloudinary.com/dglphuocy/image/upload/v1753683967/pexels-photo-1639557_lihvg0.jpg" },
         { "name": "Cheese Slice Burger", "price": 60, "isAvailable": true, "image": "https://res.cloudinary.com/dglphuocy/image/upload/v1753684112/pexels-photo-3616956_g0goz0.jpg" },
-        { "name": "Paneer Burger", "price": 70, "isAvailable": true, "image": "" },
+        { "name": "Paneer Burger", "price": 70, "isAvailable": true, "image": "https://res.cloudinary.com/dglphuocy/image/upload/v1753684114/pexels-photo-166653_dypep3.jpg" },
         { "name": "Paneer Cheese Burger", "price": 80, "isAvailable": true, "image": "https://res.cloudinary.com/dglphuocy/image/upload/v1753684111/pexels-photo-1199960_c6hw6b.jpg" },
         { "name": "Pav Bhaji", "price": 50, "isAvailable": true, "image": "https://res.cloudinary.com/dglphuocy/image/upload/v1753684114/pexels-photo-166653_dypep3.jpg" }
       ]
