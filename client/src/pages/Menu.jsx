@@ -89,11 +89,11 @@ const Menu = ({ menuData }) => {
 
                 <div className="mt-2 text-sm text-white">
                   {item.price !== undefined ? (
-                    <p>₹ {item.price}</p>
+                    <p>Price: ₹ {item.price}</p>
                   ) : (
                     <>
-                      <p>Half: ₹ {item.half}</p>
-                      <p>Full: ₹ {item.full}</p>
+                      <p>Half Price: ₹ {item.half}</p>
+                      <p>Full Price: ₹ {item.full}</p>
                     </>
                   )}
                 </div>
