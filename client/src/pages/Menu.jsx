@@ -58,6 +58,7 @@ const Menu = ({ menuData }) => {
   return (
     <section
       ref={sectionRef}
+      id="Menu"
       className="w-full relative min-h-screen bg-black text-white px-[4vw] py-16"
     >
       <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center text-yellow-400">
