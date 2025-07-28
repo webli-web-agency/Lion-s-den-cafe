@@ -98,41 +98,22 @@ const Contact = ({ startAnimation }) => {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 max-w-[1200px] w-full mx-auto">
 
-        <div className="flex flex-col gap-8 text-sm contact-info">
-          <div className="flex items-start gap-3">
-            <i className="ri-phone-line text-xl text-green-400"></i>
-            <span>+91 7275844336</span>
-          </div>
+       {/* Phone Numbers */}
+<div className="flex flex-col gap-3 contact-info">
+  <div className="flex items-center gap-3">
+    <i className="ri-phone-line text-xl text-green-400"></i>
+    <span>+91 7275844336</span>
+  </div>
+  <div className="flex items-center gap-3">
+    <i className="ri-phone-line text-xl text-green-400"></i>
+    <span>+91 7275946488</span>
+  </div>
+  <div className="flex items-center gap-3">
+    <i className="ri-phone-line text-xl text-green-400"></i>
+    <span>+91 6394839336</span>
+  </div>
+</div>
 
-          <div className="flex items-start gap-3">
-            <i className="ri-mail-line text-xl text-pink-400"></i>
-            <span>lionsdencafe6@gmail.com</span>
-          </div>
-
-          <div className="flex items-start gap-3">
-            <i className="ri-instagram-line text-xl text-red-400"></i>
-            <a
-              href="https://instagram.com/lions_den_cafe24"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:underline"
-            >
-              @lions_den_cafe24
-            </a>
-          </div>
-
-          <div className="flex items-start gap-3">
-            <i className="ri-map-pin-line text-xl text-yellow-400"></i>
-            <a
-              href="https://www.google.com/maps?q=Lion's+Den+Cafe"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:underline"
-            >
-              Find us on Maps
-            </a>
-          </div>
-        </div>
 
         <form
           className="booking-form w-full flex flex-col gap-4 bg-black/40 p-6 rounded-xl backdrop-blur-md border border-white/10"
