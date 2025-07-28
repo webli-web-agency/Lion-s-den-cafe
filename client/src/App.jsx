@@ -6,6 +6,7 @@ import Service from './pages/Service';
 import TastyPicks from './pages/TastyPicks';
 import Menu from './pages/Menu';
 import Navbar from './components/Navbar';
+import FloatingIcons from './components/FloatingIcons'
 import Preloader from './components/Preloader';
 import { Toaster } from 'react-hot-toast';
 import axios from 'axios';
@@ -41,6 +42,7 @@ function App() {
     <>
       <Toaster position="top-center" />
       <Navbar />
+      <FloatingIcons />
       <Home startAnimation={!isLoading} /> {/* ✅ Pass prop here */}
       <TastyPicks />
       <Menu menuData={menuData} />
