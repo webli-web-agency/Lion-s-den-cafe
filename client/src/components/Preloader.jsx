@@ -1,32 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { gsap } from 'gsap';
 
-const Preloader = ({ onComplete }) => {
-  const [percent, setPercent] = useState(0);
+const Preloader = ({ progress }) => {
   const [exit, setExit] = useState(false);
 
   useEffect(() => {
-    let interval;
-
-    if (percent < 100) {
-      interval = setInterval(() => {
-        setPercent((prev) => Math.min(prev + 1, 100));
-      }, 55); // ~2.5 seconds to reach 100%
-    } else {
-      // Preloader exit animation
-      setTimeout(() => {
-        setExit(true);
-        gsap.to(".preloader", {
-          y: "-100%",
-          duration: 0.2,
-          ease: "power3.inOut",
-          onComplete: onComplete,
-        });
-      }, 300); // small pause before exit
+    if (progress >= 100 && !exit) {
+      setExit(true);
+      gsap.to(".preloader", {
+        y: "-100%",
+        duration: 1.5,
+        ease: "power3.inOut",
+      });
     }
-
-    return () => clearInterval(interval);
-  }, [percent, onComplete]);
+  }, [progress, exit]);
 
   return (
     <div className="preloader fixed top-0 left-0 w-full h-full bg-yellow-500 text-zinc-800 z-[9999] flex flex-col items-center justify-center overflow-hidden">
@@ -35,7 +22,7 @@ const Preloader = ({ onComplete }) => {
       </h1>
 
       <div className="absolute bottom-6 right-8 text-[8vw] md:text-lg font-mono text-gray-600">
-        {percent}%
+        {progress}%
       </div>
     </div>
   );

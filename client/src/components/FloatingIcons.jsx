@@ -1,9 +1,29 @@
-import React from 'react';
-import 'remixicon/fonts/remixicon.css';
+import React, { useRef } from 'react';
+import { gsap } from 'gsap';
+import { useGSAP } from '@gsap/react'
 
 const FloatingIcons = () => {
+  const iconRef = useRef(null);
+
+  useGSAP(() => {
+    gsap.fromTo(
+      iconRef.current,
+      { opacity: 0, y: 50 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        delay: 3.2, // ⏱️ delay after preloader ends
+        ease: 'power3.out',
+      }
+    );
+  }, []);
+
   return (
-    <div className="fixed right-4 bottom-[20%] flex flex-col gap-4 z-50">
+    <div
+      ref={iconRef}
+      className="fixed right-4 bottom-[20%] flex flex-col gap-4 z-50 opacity-0"
+    >
       {/* WhatsApp */}
       <a
         href="https://wa.me/917275844336"
