@@ -4,7 +4,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import { toast } from 'react-hot-toast';
 
-
 gsap.registerPlugin(ScrollTrigger);
 
 const Contact = ({ startAnimation }) => {
@@ -48,43 +47,42 @@ const Contact = ({ startAnimation }) => {
     });
   }, [{ scope: containerRef }, startAnimation]);
 
- const handleSubmit = async (e) => {
-  e.preventDefault();
-  const form = e.target;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const form = e.target;
 
-  const bookingData = {
-    name: form[0].value,
-    email: form[1].value,
-    phone: form[2].value,
-    date: form[3].value,
-    time: form[4].value,
-    occasion: form[5].value,
-    message: form[6].value,
-  };
+    const bookingData = {
+      name: form[0].value,
+      email: form[1].value,
+      phone: form[2].value,
+      date: form[3].value,
+      time: form[4].value,
+      occasion: form[5].value,
+      message: form[6].value,
+    };
 
-  try {
-    const res = await fetch("https://lionsdencafe.onrender.com/send-email", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(bookingData),
-    });
+    try {
+      const res = await fetch("https://lionsdencafe.onrender.com/send-email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(bookingData),
+      });
 
-    const result = await res.json();
+      const result = await res.json();
 
-    if (result.success) {
-      toast.success("🎉 Booking Submitted Successfully!");
-      form.reset();
-    } else {
-      toast.error("❌ Failed to submit. Try again!");
+      if (result.success) {
+        toast.success("🎉 Booking Submitted Successfully!");
+        form.reset();
+      } else {
+        toast.error("❌ Failed to submit. Try again!");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("⚠️ Something went wrong!");
     }
-  } catch (error) {
-    console.error(error);
-    toast.error("⚠️ Something went wrong!");
-  }
-};
-
+  };
 
   return (
     <section
@@ -101,14 +99,21 @@ const Contact = ({ startAnimation }) => {
         <div className="flex flex-col gap-8 text-sm contact-info">
           <div className="flex items-start md:gap-3 gap-1 md:flex-row flex-col">
             <i className="ri-phone-line text-xl text-green-400"></i>
-            <span>+91 7275844336</span>
-            <span>+91 7275946488</span>
-            <span>+91 6394839336</span>
+            <div className="flex flex-col">
+              <a href="tel:+917275844336" className="hover:underline text-white">+91 7275844336</a>
+              <a href="tel:+917275946488" className="hover:underline text-white">+91 7275946488</a>
+              <a href="tel:+916394839336" className="hover:underline text-white">+91 6394839336</a>
+            </div>
           </div>
 
           <div className="flex items-start gap-3">
             <i className="ri-mail-line text-xl text-pink-400"></i>
-            <span>lionsdencafe6@gmail.com</span>
+            <a
+              href="mailto:lionsdencafe6@gmail.com"
+              className="hover:underline text-white"
+            >
+              lionsdencafe6@gmail.com
+            </a>
           </div>
 
           <div className="flex items-start gap-3">
@@ -117,7 +122,7 @@ const Contact = ({ startAnimation }) => {
               href="https://instagram.com/lions_den_cafe24"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:underline"
+              className="hover:underline text-white"
             >
               @lions_den_cafe24
             </a>
@@ -129,7 +134,7 @@ const Contact = ({ startAnimation }) => {
               href="https://www.google.com/maps?q=Lion's+Den+Cafe"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:underline"
+              className="hover:underline text-white"
             >
               Find us on Maps
             </a>
@@ -167,7 +172,7 @@ const Contact = ({ startAnimation }) => {
             <input
               type="date"
               required
-              className="bg-white/10 text-white placeholder:text-white/60 border border-white/20 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-ring-yellow-400 transition"
+              className="bg-white/10 text-white placeholder:text-white/60 border border-white/20 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400 transition"
             />
             <input
               type="time"
